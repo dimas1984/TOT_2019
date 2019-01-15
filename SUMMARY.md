@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* [pendahuluan](01.md)
-* [bab2](02.md)
+* [Install Angular dan Konfigurasi Firebase dengan Angular](01.md)
+* [Install Bootstrap](02.md)
 
 

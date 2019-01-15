@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>pendahuluan · GitBook</title>
+        <title>Install Angular dan Konfigurasi Firebase dengan Angular · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -111,7 +111,7 @@
                 <a href="01.html">
             
                     
-                    pendahuluan
+                    Install Angular dan Konfigurasi Firebase dengan Angular
             
                 </a>
             
@@ -124,7 +124,7 @@
                 <a href="02.html">
             
                     
-                    bab2
+                    Install Bootstrap
             
                 </a>
             
@@ -162,7 +162,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >pendahuluan</a>
+        <a href="." >Install Angular dan Konfigurasi Firebase dengan Angular</a>
     </h1>
 </div>
 
@@ -179,81 +179,139 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Mahasiswa mampu menginstall Android Studio dan Android SDK</li>
-<li>Mahasiswa Mampu menginstall Emulator</li>
-<li>Mahasiswa Mampu Menghubungkan Perangkat Mobile Ke Komputer / Laptop</li>
-<li>Mahasiswa Mampu membuat Aplikasi Hello World Sederhana dan Melakukan Kompilasi ke Perangkat Mobile</li>
+<li>Peserta mampu menginstall angular</li>
+<li>Peserta mampu membuat project pada firebase</li>
+<li>Peserta mampu melakukan konfigurasi firebase pada angular</li>
 </ul>
 <h1 id="modul-1">Modul 1</h1>
-<p>Android adalah sebuah sistem operasi dan platform pemrograman yang dikembangkan oleh Google untuk <em>smartphone</em>. Sebuah aplikasi Android dikembangkan menggunakan IDE Android Studio. Pada Android Studio terdapat berbagai macam <em>tools</em> untuk melakukan <em>debug</em>, <em>testing</em>, dan pengembangan aplikasi yang cepat dan mudah.
-Android Studio dapat dipasang pada sistem operasi Windows, Linux, atau MacOS.</p>
-<h3 id="instalasi-android-studio">Instalasi Android Studio</h3>
-<p>Untuk melakukan instalasi Android Studio, download installer Android Studio terlebih dahulu pada link berikut</p>
-<blockquote>
-<p><a href="https://developer.android.com/studio/" target="_blank">https://developer.android.com/studio/</a></p>
-</blockquote>
-<p>Sebelum melakukan instalasi, pastikan bahwa JDK (Java Development Kit) telah terinstal pada komputer anda.</p>
-<pre><code class="lang-php"><span class="hljs-meta">&lt;?php</span> 
-defined(<span class="hljs-string">&apos;BASEPATH&apos;</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">&apos;No direct script access allowed&apos;</span>);
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">cetak</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span> </span>{
-
-    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span></span>{
-        <span class="hljs-keyword">parent</span>::__construct();
-        $this-&gt;load-&gt;helper(<span class="hljs-string">&apos;url&apos;</span>);
-        $this-&gt;load-&gt;helper(<span class="hljs-string">&apos;form&apos;</span>);
-        $this-&gt;load-&gt;model(<span class="hljs-string">&apos;login_model&apos;</span>);
-        $this-&gt;load-&gt;model(<span class="hljs-string">&apos;mahasiswa_model&apos;</span>);
-        $this-&gt;load-&gt;library(<span class="hljs-string">&apos;dompdf_gen&apos;</span>);<span class="hljs-comment">// tambahkan lib dompdf</span>
-        $this-&gt;load-&gt;model(<span class="hljs-string">&apos;cetak_model&apos;</span>);
-        $this-&gt;load-&gt;library(<span class="hljs-string">&apos;file&apos;</span>);
-
-        <span class="hljs-comment">// $this-&gt;load-&gt;library(&apos;session&apos;);</span>
-
-        <span class="hljs-comment">// validasi level</span>
-        <span class="hljs-keyword">if</span>($this-&gt;session-&gt;userdata(<span class="hljs-string">&apos;level&apos;</span>)!=<span class="hljs-string">&quot;user&quot;</span>){
-            redirect(<span class="hljs-string">&apos;login&apos;</span>,<span class="hljs-string">&apos;refresh&apos;</span>);
-        }
-
-    }
-
-    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
-    </span>{
-
-        $data= <span class="hljs-keyword">array</span>(
-            <span class="hljs-string">&apos;title&apos;</span>=&gt;<span class="hljs-string">&apos;cetak laporan&apos;</span>,
-            <span class="hljs-string">&apos;mahasiswa&apos;</span>=&gt;$this-&gt;mahasiswa_model-&gt;datatabels()
-        );
-        $this-&gt;load-&gt;view(<span class="hljs-string">&apos;template/header_datatabels_user&apos;</span>,$data);
-        $this-&gt;load-&gt;view(<span class="hljs-string">&apos;mahasiswa/preview&apos;</span>,$data);
-        $this-&gt;load-&gt;view(<span class="hljs-string">&apos;template/footer_datatabels_user&apos;</span>);
-    }
-
-    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cetakPDF</span><span class="hljs-params">()</span> </span>{
-
-        $data[<span class="hljs-string">&apos;mahasiswa&apos;</span>]= $this-&gt;cetak_model-&gt;view_row();
-        $this-&gt;load-&gt;view(<span class="hljs-string">&apos;mahasiswa/print&apos;</span>,$data);
-        $paper_size=<span class="hljs-string">&apos;A4&apos;</span>;
-        $orientation=<span class="hljs-string">&apos;landscape&apos;</span>;
-        $html=$this-&gt;output-&gt;get-&gt;output;
-
-       $dompdf= <span class="hljs-keyword">new</span> DOMPDF();
-       $this-&gt;dompdf-&gt;load_html($html);
-       $this-&gt;dompdf-&gt;render();
-       $this-&gt;dompdf-&gt;steam(<span class="hljs-string">&quot;laporan.pdf&quot;</span>);
-       <span class="hljs-keyword">unset</span>($html);
-       <span class="hljs-keyword">unset</span>($dompdf);
-
-
-    }
-
+<p>Angular adalah sebuah sebuah platform untuk mengembangkan front&#x2013;end dari sebuah aplikasi web yang berbasis open source. Platform ini dikembangkan oleh tim Google dan komunitas open source Angular. Platform ini menggunakan bahasa Typescript, sebuah pengembangan dari bahasa Javascript yang merupakan bahasa utama yang digunakan untuk web development. Angular sendiri merupakan platform yang dibangun untuk meningkatkan performa dari AngularJS.</p>
+<h3 id="instalasi-angular-dan-menampilkan-ke-browser">Instalasi angular dan menampilkan ke browser</h3>
+<p>cat: untuk memudahkan dalam proses pembuatan online shop menggunakan angular disarankan menggunakan VSCode</p>
+<p>Untuk melakukan instalasi angular dengan cara </p>
+<ul>
+<li>buatlah folder dengan nama 01</li>
+<li>buka terminal menuju ke folder 01 yang akan kita install angular</li>
+<li>setelah itu ketik code sebagai berikut :<pre><code>ng new oshop
+</code></pre></li>
+</ul>
+<p>jika berhasil maka akan tampil seperti pada gambar dibawah ini pada folder 01
+-&gt; img 1</p>
+<p>untuk melihat hasilnya yang harus dilakukan </p>
+<ul>
+<li>masih tetap diterminal ketik code berikut</li>
+</ul>
+<pre><code>cd oshop
+ng serve
+</code></pre><p>maka akan tampil di halaman web seperti pada gambar dibawah ini
+-&gt; img 2</p>
+<h3 id="membuat-project-pada-firebase">membuat project pada firebase</h3>
+<p>setelah berhasil mengginstall angular maka langkah berikutnya </p>
+<ul>
+<li>buka firebase <a href="https://firebase.google.com/" target="_blank">https://firebase.google.com/</a> </li>
+<li>masuk dengan login gmail anda</li>
+<li>pilih menu go to console</li>
+<li>add project</li>
+<li>project name : oshop</li>
+<li>jika berhasil maka tampilannya akan seperti gamabar dibawah ini  -&gt; img3</li>
+<li>pilih Add Firebase to your web app dan copy apikey sampai messageSenderId seperti pada code dibawah ini</li>
+</ul>
+<pre><code>    apiKey: &quot;AIzaSyDBPUYjTMYCAYNHVItpjTZmqAmnIjAvPag&quot;,
+    authDomain: &quot;oshop-69b6a.firebaseapp.com&quot;,
+    databaseURL: &quot;https://oshop-69b6a.firebaseio.com&quot;,
+    projectId: &quot;oshop-69b6a&quot;,
+    storageBucket: &quot;oshop-69b6a.appspot.com&quot;,
+    messagingSenderId: &quot;1009638802566&quot;
+</code></pre><h3 id="konfigurasi-firebase-pada-angular">konfigurasi firebase pada angular</h3>
+<ul>
+<li>setelah itu buka oshop tadi pada text editor vscode </li>
+<li>buka environment.ts pada oshop/src/environment/environment.ts</li>
+<li>tambahkan code berikut (<strong>cat: isi firebase sesuikan dengan firebase anda dan pastikan pada setelah production: false terdapat koma</strong>)<pre><code>firebase:{
+  apiKey: &quot;AIzaSyDBPUYjTMYCAYNHVItpjTZmqAmnIjAvPag&quot;,
+  authDomain: &quot;oshop-69b6a.firebaseapp.com&quot;,
+  databaseURL: &quot;https://oshop-69b6a.firebaseio.com&quot;,
+  projectId: &quot;oshop-69b6a&quot;,
+  storageBucket: &quot;oshop-69b6a.appspot.com&quot;,
+  messagingSenderId: &quot;1009638802566&quot;
 }
+</code></pre></li>
+<li>tambahkan juga pada environment.prod.ts <strong>(cat: isi firebase sesuikan dengan firebase anda dan pastikan pada setelah production: true terdapat koma)</strong></li>
+</ul>
+<pre><code>firebase:{
+    apiKey: &quot;AIzaSyDBPUYjTMYCAYNHVItpjTZmqAmnIjAvPag&quot;,
+    authDomain: &quot;oshop-69b6a.firebaseapp.com&quot;,
+    databaseURL: &quot;https://oshop-69b6a.firebaseio.com&quot;,
+    projectId: &quot;oshop-69b6a&quot;,
+    storageBucket: &quot;oshop-69b6a.appspot.com&quot;,
+    messagingSenderId: &quot;1009638802566&quot;
+  }
+</code></pre><ul>
+<li>langkah berikutnya install angularfire nya</li>
+<li>buka terminal ketik code berikut<pre><code>npm i --save firebase@4.2.0 angularfire2@4.0.0-rc.1
+</code></pre></li>
+</ul>
+<ul>
+<li>setelah berhasil maka selanjut kita tambahkan code berikut pada app.module.ts <strong>(oshop/src/app/app.module.ts)</strong></li>
+<li>import angularfire pada app.module.ts<pre><code>import { AngularFireModule } from &apos;angularfire2&apos;;
+import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
+import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
+</code></pre></li>
+<li>sehingga hasil keseluruhan code sebagai berikut:</li>
+</ul>
+<pre><code>import { BrowserModule } from &apos;@angular/platform-browser&apos;;
+import { NgModule } from &apos;@angular/core&apos;;
+import { AngularFireModule } from &apos;angularfire2&apos;;
+import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
+import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
 
-<span class="hljs-comment">/* End of file Controllername.php */</span>
-<span class="hljs-meta">?&gt;</span>
+import { AppComponent } from &apos;./app.component&apos;;
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+}
+</code></pre><ul>
+<li>langkah berikutnya tambahkan code berikut pada imports <strong>(masih pada app.module.ts)</strong><pre><code>imports: [
+  BrowserModule,
+  AngularFireModule.initializeApp(environment.firebase),
+  AngularFireDatabaseModule,
+  AngularFireAuthModule
+],
+</code></pre></li>
+<li>untuk hasil keseluruhan code sebagai berikut : <strong>(catatan: pada import { environment } from &apos;src/environments/environments&apos;; diganti dengan import { environment } from &apos;src/environments/environment&apos;; tanpa s )</strong></li>
+</ul>
+<pre><code>import { BrowserModule } from &apos;@angular/platform-browser&apos;;
+import { NgModule } from &apos;@angular/core&apos;;
+import { AngularFireModule } from &apos;angularfire2&apos;;
+import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
+import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
+
+import { AppComponent } from &apos;./app.component&apos;;
+import { environment } from &apos;src/environments/environment&apos;;
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
+
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
 </code></pre>
-<h1 id="tugas-1">Tugas 1</h1>
-
                                 
                                 </section>
                             
@@ -285,7 +343,7 @@ defined(<span class="hljs-string">&apos;BASEPATH&apos;</span>) <span class="hljs
                 </a>
                 
                 
-                <a href="02.html" class="navigation navigation-next " aria-label="Next page: bab2">
+                <a href="02.html" class="navigation navigation-next " aria-label="Next page: Install Bootstrap">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -296,7 +354,7 @@ defined(<span class="hljs-string">&apos;BASEPATH&apos;</span>) <span class="hljs
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"pendahuluan","level":"1.2","depth":1,"next":{"title":"bab2","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"01.md","mtime":"2019-01-14T09:34:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-14T09:38:46.532Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Install Angular dan Konfigurasi Firebase dengan Angular","level":"1.2","depth":1,"next":{"title":"Install Bootstrap","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"01.md","mtime":"2019-01-15T12:46:56.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-15T11:18:30.765Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
