@@ -1,6 +1,6 @@
 # Introduction
 
-Pastikan sudah terinstall node.js
-gunakan text editor VSCode
+- Pastikan sudah terinstall node.js
+- Gunakan text editor VSCode
 
 ### ini bold
