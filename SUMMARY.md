@@ -1,7 +1,14 @@
 # Summary
 
-* [Introduction](README.md)
-* [Install Angular dan Konfigurasi Firebase dengan Angular](01.md)
-* [Install Bootstrap](02.md)
+* [README](README.md)
+* [1. Pendahuluan](01.md)
+* [2. Membuat Project Baru dan Konfigurasi](02.md)
+* [3. Install Bootstrap 4 dan konfigurasi](03.md)
+* [4. Membuat Component Baru](04.md)
+* [5. Routes](05.md)
+* [6. @ng-bootstrap](06.md)
+* [7. navbar](07.md)
+* [8. Develop](08.md)
+
 
 

@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.14.2 - 2018-12-26
+
+* Fix `db.getState is not a function`
+
+## 0.14.1 - 2018-12-25
+
+* Show error message if port is already used
+* Upgrade to [lowdb](https://github.com/typicode/lowdb) `1.0`
+
 ## 0.14.0 - 2018-06-09
 
 * Listen to `localhost` by default, instead of `0.0.0.0`

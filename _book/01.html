@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Install Angular dan Konfigurasi Firebase dengan Angular · GitBook</title>
+        <title>1. Pendahuluan · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -98,7 +98,7 @@
                 <a href="./">
             
                     
-                    Introduction
+                    README
             
                 </a>
             
@@ -111,7 +111,7 @@
                 <a href="01.html">
             
                     
-                    Install Angular dan Konfigurasi Firebase dengan Angular
+                    1. Pendahuluan
             
                 </a>
             
@@ -124,7 +124,85 @@
                 <a href="02.html">
             
                     
-                    Install Bootstrap
+                    2. Membuat Project Baru dan Konfigurasi
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="03.html">
+            
+                <a href="03.html">
+            
+                    
+                    3. Install Bootstrap 4 dan konfigurasi
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="04.html">
+            
+                <a href="04.html">
+            
+                    
+                    4. Membuat Component Baru
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="05.html">
+            
+                <a href="05.html">
+            
+                    
+                    5. Routes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="06.html">
+            
+                <a href="06.html">
+            
+                    
+                    6. @ng-bootstrap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="07.html">
+            
+                <a href="07.html">
+            
+                    
+                    7. navbar
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="08.html">
+            
+                <a href="08.html">
+            
+                    
+                    8. Develop
             
                 </a>
             
@@ -162,7 +240,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Install Angular dan Konfigurasi Firebase dengan Angular</a>
+        <a href="." >1. Pendahuluan</a>
     </h1>
 </div>
 
@@ -177,141 +255,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
+                                <h1 id="pendahuluan">Pendahuluan</h1>
 <ul>
-<li>Peserta mampu menginstall angular</li>
-<li>Peserta mampu membuat project pada firebase</li>
-<li>Peserta mampu melakukan konfigurasi firebase pada angular</li>
-</ul>
-<h1 id="modul-1">Modul 1</h1>
-<p>Angular adalah sebuah sebuah platform untuk mengembangkan front&#x2013;end dari sebuah aplikasi web yang berbasis open source. Platform ini dikembangkan oleh tim Google dan komunitas open source Angular. Platform ini menggunakan bahasa Typescript, sebuah pengembangan dari bahasa Javascript yang merupakan bahasa utama yang digunakan untuk web development. Angular sendiri merupakan platform yang dibangun untuk meningkatkan performa dari AngularJS.</p>
-<h3 id="instalasi-angular-dan-menampilkan-ke-browser">Instalasi angular dan menampilkan ke browser</h3>
-<p>cat: untuk memudahkan dalam proses pembuatan online shop menggunakan angular disarankan menggunakan VSCode</p>
-<p>Untuk melakukan instalasi angular dengan cara </p>
-<ul>
-<li>buatlah folder dengan nama 01</li>
-<li>buka terminal menuju ke folder 01 yang akan kita install angular</li>
-<li>setelah itu ketik code sebagai berikut :<pre><code>ng new oshop
+<li>Untuk install angular kita membutuhkan node.js dan NPM <a href="https://cli.angular.io/" target="_blank">https://cli.angular.io/</a> </li>
+<li>Install node.js terlebih dahulu <a href="https://nodejs.org/en/" target="_blank">https://nodejs.org/en/</a> </li>
+<li>Sesuaikan dengan Sistem Operasi kalian windows, mac, linux</li>
+<li>Download dan Pilih yang Latest Feature</li>
+<li>Jika sudah terinstall maka buka cmd atau command promt ketik <pre><code>node &#x2013; version
+</code></pre></li>
+<li>Jika NPM sudah terinstall cek dengan command promt <pre><code>npm -v
+</code></pre></li>
+<li>Untuk menginstall angular ketik code berikut pada command promt <strong>(menggunakan angular versi 7.2.2)</strong><pre><code>npm i -g @angular/cli@latest
+</code></pre></li>
+<li>Untuk mengecek apakah angular sudah terinstall ketik kode berikut<pre><code>ng --version
 </code></pre></li>
 </ul>
-<p>jika berhasil maka akan tampil seperti pada gambar dibawah ini pada folder 01
--&gt; img 1</p>
-<p>untuk melihat hasilnya yang harus dilakukan </p>
-<ul>
-<li>masih tetap diterminal ketik code berikut</li>
-</ul>
-<pre><code>cd oshop
-ng serve
-</code></pre><p>maka akan tampil di halaman web seperti pada gambar dibawah ini
--&gt; img 2</p>
-<h3 id="membuat-project-pada-firebase">membuat project pada firebase</h3>
-<p>setelah berhasil mengginstall angular maka langkah berikutnya </p>
-<ul>
-<li>buka firebase <a href="https://firebase.google.com/" target="_blank">https://firebase.google.com/</a> </li>
-<li>masuk dengan login gmail anda</li>
-<li>pilih menu go to console</li>
-<li>add project</li>
-<li>project name : oshop</li>
-<li>jika berhasil maka tampilannya akan seperti gamabar dibawah ini  -&gt; img3</li>
-<li>pilih Add Firebase to your web app dan copy apikey sampai messageSenderId seperti pada code dibawah ini</li>
-</ul>
-<pre><code>    apiKey: &quot;AIzaSyDBPUYjTMYCAYNHVItpjTZmqAmnIjAvPag&quot;,
-    authDomain: &quot;oshop-69b6a.firebaseapp.com&quot;,
-    databaseURL: &quot;https://oshop-69b6a.firebaseio.com&quot;,
-    projectId: &quot;oshop-69b6a&quot;,
-    storageBucket: &quot;oshop-69b6a.appspot.com&quot;,
-    messagingSenderId: &quot;1009638802566&quot;
-</code></pre><h3 id="konfigurasi-firebase-pada-angular">konfigurasi firebase pada angular</h3>
-<ul>
-<li>setelah itu buka oshop tadi pada text editor vscode </li>
-<li>buka environment.ts pada oshop/src/environment/environment.ts</li>
-<li>tambahkan code berikut (<strong>cat: isi firebase sesuikan dengan firebase anda dan pastikan pada setelah production: false terdapat koma</strong>)<pre><code>firebase:{
-  apiKey: &quot;AIzaSyDBPUYjTMYCAYNHVItpjTZmqAmnIjAvPag&quot;,
-  authDomain: &quot;oshop-69b6a.firebaseapp.com&quot;,
-  databaseURL: &quot;https://oshop-69b6a.firebaseio.com&quot;,
-  projectId: &quot;oshop-69b6a&quot;,
-  storageBucket: &quot;oshop-69b6a.appspot.com&quot;,
-  messagingSenderId: &quot;1009638802566&quot;
-}
-</code></pre></li>
-<li>tambahkan juga pada environment.prod.ts <strong>(cat: isi firebase sesuikan dengan firebase anda dan pastikan pada setelah production: true terdapat koma)</strong></li>
-</ul>
-<pre><code>firebase:{
-    apiKey: &quot;AIzaSyDBPUYjTMYCAYNHVItpjTZmqAmnIjAvPag&quot;,
-    authDomain: &quot;oshop-69b6a.firebaseapp.com&quot;,
-    databaseURL: &quot;https://oshop-69b6a.firebaseio.com&quot;,
-    projectId: &quot;oshop-69b6a&quot;,
-    storageBucket: &quot;oshop-69b6a.appspot.com&quot;,
-    messagingSenderId: &quot;1009638802566&quot;
-  }
-</code></pre><ul>
-<li>langkah berikutnya install angularfire nya</li>
-<li>buka terminal ketik code berikut<pre><code>npm i --save firebase@4.2.0 angularfire2@4.0.0-rc.1
-</code></pre></li>
-</ul>
-<ul>
-<li>setelah berhasil maka selanjut kita tambahkan code berikut pada app.module.ts <strong>(oshop/src/app/app.module.ts)</strong></li>
-<li>import angularfire pada app.module.ts<pre><code>import { AngularFireModule } from &apos;angularfire2&apos;;
-import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
-import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
-</code></pre></li>
-<li>sehingga hasil keseluruhan code sebagai berikut:</li>
-</ul>
-<pre><code>import { BrowserModule } from &apos;@angular/platform-browser&apos;;
-import { NgModule } from &apos;@angular/core&apos;;
-import { AngularFireModule } from &apos;angularfire2&apos;;
-import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
-import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
 
-import { AppComponent } from &apos;./app.component&apos;;
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-}
-</code></pre><ul>
-<li>langkah berikutnya tambahkan code berikut pada imports <strong>(masih pada app.module.ts)</strong><pre><code>imports: [
-  BrowserModule,
-  AngularFireModule.initializeApp(environment.firebase),
-  AngularFireDatabaseModule,
-  AngularFireAuthModule
-],
-</code></pre></li>
-<li>untuk hasil keseluruhan code sebagai berikut : <strong>(catatan: pada import { environment } from &apos;src/environments/environments&apos;; diganti dengan import { environment } from &apos;src/environments/environment&apos;; tanpa s )</strong></li>
-</ul>
-<pre><code>import { BrowserModule } from &apos;@angular/platform-browser&apos;;
-import { NgModule } from &apos;@angular/core&apos;;
-import { AngularFireModule } from &apos;angularfire2&apos;;
-import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
-import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
-
-import { AppComponent } from &apos;./app.component&apos;;
-import { environment } from &apos;src/environments/environment&apos;;
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule
-
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-</code></pre>
                                 
                                 </section>
                             
@@ -338,12 +297,12 @@ export class AppModule { }
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: README">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="02.html" class="navigation navigation-next " aria-label="Next page: Install Bootstrap">
+                <a href="02.html" class="navigation navigation-next " aria-label="Next page: 2. Membuat Project Baru dan Konfigurasi">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -354,7 +313,7 @@ export class AppModule { }
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Install Angular dan Konfigurasi Firebase dengan Angular","level":"1.2","depth":1,"next":{"title":"Install Bootstrap","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"01.md","mtime":"2019-01-15T12:46:56.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-15T11:18:30.765Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"1. Pendahuluan","level":"1.2","depth":1,"next":{"title":"2. Membuat Project Baru dan Konfigurasi","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"previous":{"title":"README","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"01.md","mtime":"2019-01-17T11:49:37.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-17T16:15:03.196Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
