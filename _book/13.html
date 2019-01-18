@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>9. Auth with Google Login · GitBook</title>
+        <title>13. Service · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="10.html" />
+    <link rel="next" href="14.html" />
     
     
-    <link rel="prev" href="08.html" />
+    <link rel="prev" href="12.html" />
     
 
     </head>
@@ -210,7 +210,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.10" data-path="09.html">
+        <li class="chapter " data-level="1.10" data-path="09.html">
             
                 <a href="09.html">
             
@@ -262,7 +262,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.14" data-path="13.html">
+        <li class="chapter active" data-level="1.14" data-path="13.html">
             
                 <a href="13.html">
             
@@ -318,7 +318,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >9. Auth with Google Login</a>
+        <a href="." >13. Service</a>
     </h1>
 </div>
 
@@ -335,47 +335,58 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu menerapkan auth dengan menggunakan google login</li>
+<li>Peserta mampu membuat service untuk login dan logout</li>
 </ul>
-<h1 id="percobaan-8-auth-with-google-login">Percobaan 8 Auth With Google Login</h1>
+<h1 id="percobaan-11-menambahkan-service">Percobaan 11 menambahkan service</h1>
 <ul>
-<li>Langkah pertama konfigurasi auth pada firebase</li>
-<li>buka halaman firebase <strong><a href="https://console.firebase.google.com/project/(nama-project-anda/authentication/providers" target="_blank">https://console.firebase.google.com/project/(nama-project-anda/authentication/providers</a></strong></li>
-<li>enable sign-in providers <strong>google</strong> seperti pada gambar dibawah ini 
-<img src="image/chapter2/img1.png" alt=""></li>
-<li>tambahkan menu login pada <strong>bs-navbar.component.html</strong> untuk codenya sbb:</li>
+<li>Service atau Provider dalam Angular sendiri sudah diperkenalkan sejak AngularJS v.1.x, dimana service menjadi bagian yang Injectable dari kode Angular sehingga pada prakteknya sering digunakan sebagai pembungkusan (Encapsulation) dari suatu logic. Angular sendiri sudah menggunakan depedency injection (DI) sejak AngularJS versi 1.x sehingga lebih mudah untuk meng-inject atau memasukkan service kedalam komponen yang ingin menggunakannya.</li>
 </ul>
-<pre><code>  &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;!-- 2.tambahkan routerlink --&gt;
-        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/shopping-chart&quot;&gt;Shopping Chart&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
-      &lt;/li&gt;
+<h3 id="membuat-service">membuat service</h3>
+<ul>
+<li>untuk membuat sebuah service harus generate terlebih dahulu menggunakan <strong>terminal</strong> untuk codenya sebagai berikut:</li>
+</ul>
+<pre><code>ng g s auth
 </code></pre><ul>
-<li>sehingga hasilnya seperti pada gambar ini</li>
+<li><p>keterangan <strong>g (global)</strong>, <strong>s (service)</strong>, <strong>auth (nama_file)</strong></p>
+</li>
+<li><p>setelah berhasil membuat sebuah service maka langkah berikutnya tambahkan pada <strong>providers</strong> pada <strong>app.module.ts</strong></p>
+</li>
+<li>buka file <strong>app.module.ts</strong><pre><code>providers: [
+  AuthService
+],
+</code></pre></li>
+<li>buka file <strong>auth.service.ts</strong> tambahkan code berikut:</li>
 </ul>
-<p><img src="image/chapter2/img2.png" alt=""></p>
-<ul>
-<li>tambahkan code berikut pada <strong>login.component.html</strong> kita menambahkan <strong>function login()</strong></li>
-</ul>
-<pre><code>&lt;button 
-(click)=&quot;login()&quot;
-class=&quot;btn btn-primary&quot;&gt;Login With Goolge&lt;/button&gt;
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { AngularFireAuth } from &apos;angularfire2/auth&apos;;
+import * as firebase from &apos;firebase&apos;;
+import { Observable } from &apos;rxjs/internal/Observable&apos;;
+
+@Injectable({
+  providedIn: &apos;root&apos;
+})
+export class AuthService {
+
+  user$:Observable&lt;firebase.User&gt;;
+
+  constructor(private afAuth:AngularFireAuth) {
+
+    this.user$= afAuth.authState;
+   }
+
+  login(){
+    this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+  }
+
+  logout(){
+    this.afAuth.auth.signOut();
+  }
+}
 </code></pre><ul>
-<li>sehingga tampilannya seperti pada gambar ini</li>
-</ul>
-<p><img src="image/chapter2/img3.png" alt=""></p>
-<ul>
-<li>buka halaman <strong>login.component.ts</strong> tambahkan beberapa code antara lain
--- import * as firebase from &apos;firebase&apos;
--- constructor
--- function login</li>
-<li>sehingga code keseluruhan pada <strong>login.component.ts</strong> sebagai berikut</li>
+<li>buka file <strong>login.component.ts</strong> dan modifikasi codenya menjadi seperti berikut </li>
 </ul>
 <pre><code>import { Component } from &apos;@angular/core&apos;;
-import * as firebase from &apos;firebase&apos;;
-import { AngularFireAuth} from &apos;angularfire2/auth&apos;;
+import { AuthService } from &apos;../auth.service&apos;;
 
 @Component({
   selector: &apos;app-login&apos;,
@@ -384,20 +395,79 @@ import { AngularFireAuth} from &apos;angularfire2/auth&apos;;
 })
 export class LoginComponent {
 
-  constructor(private afAuth:AngularFireAuth) { }
+  constructor(private auth:AuthService) { }
 
   login(){
-    this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+    this.auth.login();
   }
 
 }
 </code></pre><ul>
-<li>jika berhasil saat menekan tombol <strong>login with google</strong> maka aplikasi akan mengarahkan ke google account <strong>masuk dengan email yang lain</strong></li>
+<li>buka file <strong>bs-navbar.component.ts</strong> dan modifikasi codenya seperti berikut</li>
 </ul>
-<p><img src="image/chapter2/img4.png" alt=""></p>
-<ul>
-<li>untuk mengecek user yang masuk melalui web dengan menggunakan login with google,kita dapat cek pada authentication users seperti pada gambar
-<img src="image/chapter2/img5.png" alt=""></li>
+<pre><code>import { Component } from &apos;@angular/core&apos;;
+import { AuthService } from &apos;../auth.service&apos;;
+
+
+@Component({
+  selector: &apos;bs-navbar&apos;,
+  templateUrl: &apos;./bs-navbar.component.html&apos;,
+  styleUrls: [&apos;./bs-navbar.component.css&apos;]
+})
+export class BsNavbarComponent {
+
+  constructor(public auth:AuthService) {}
+
+  logout(){
+    this.auth.logout();
+  }
+}
+</code></pre><ul>
+<li>buka file <strong>bs-navbar.component.hmtl</strong> tambahkan code berikut <strong>auth.user</strong></li>
+</ul>
+<pre><code> &lt;li ngbDropdown *ngIf=&quot;auth.user$ | async as user; else anonymousUser&quot; class=&quot;nav-item dropdown&quot;&gt;
+</code></pre><ul>
+<li>sehingga kesuluruhan code pada <strong>bs-navbar.component.html</strong></li>
+</ul>
+<pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
+  &lt;a class=&quot;navbar-brand&quot; routerLink=&quot;/&quot;&gt;O&lt;/a&gt;
+  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
+    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+
+  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
+    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+
+      &lt;li class=&quot;nav-item&quot;&gt;
+        &lt;!-- 2.tambahkan routerlink --&gt;
+        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/shopping-chart&quot;&gt;Shopping Chart&lt;/a&gt;
+      &lt;/li&gt;
+
+      &lt;!-- tambahkan ng template --&gt;
+        &lt;ng-template #anonymousUser&gt;
+              &lt;li class=&quot;nav-item&quot;&gt;
+              &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/ng-template&gt;
+
+      &lt;!-- rubah code menggunakan async as user --&gt;
+      &lt;li ngbDropdown *ngIf=&quot;auth.user$ | async as user; else anonymousUser&quot; class=&quot;nav-item dropdown&quot;&gt;
+        &lt;!-- edit username mjd  {{user.displayName}}--&gt;
+        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{user.displayName}}&lt;/a&gt;
+        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
+          &lt;!-- rubah code seperti dibawah ini --&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;     
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre><ul>
+<li>jika berhasil maka tampilan seperti pada gambar berikut <strong>saat login</strong>
+<img src="image/chapter2/img8.png" alt=""></li>
 </ul>
 
                                 
@@ -426,12 +496,12 @@ export class LoginComponent {
 
             
                 
-                <a href="08.html" class="navigation navigation-prev " aria-label="Previous page: 8. Develop dengan Firebase">
+                <a href="12.html" class="navigation navigation-prev " aria-label="Previous page: 12. Menggunakan pipe untuk async">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="10.html" class="navigation navigation-next " aria-label="Next page: 10. Logout">
+                <a href="14.html" class="navigation navigation-next " aria-label="Next page: 14. Route">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -442,7 +512,7 @@ export class LoginComponent {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"9. Auth with Google Login","level":"1.10","depth":1,"next":{"title":"10. Logout","level":"1.11","depth":1,"path":"10.md","ref":"10.md","articles":[]},"previous":{"title":"8. Develop dengan Firebase","level":"1.9","depth":1,"path":"08.md","ref":"08.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"09.md","mtime":"2019-01-18T07:40:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-18T23:36:30.791Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"13. Service","level":"1.14","depth":1,"next":{"title":"14. Route","level":"1.15","depth":1,"path":"14.md","ref":"14.md","articles":[]},"previous":{"title":"12. Menggunakan pipe untuk async","level":"1.13","depth":1,"path":"12.md","ref":"12.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"13.md","mtime":"2019-01-18T23:34:05.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-18T23:36:30.791Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

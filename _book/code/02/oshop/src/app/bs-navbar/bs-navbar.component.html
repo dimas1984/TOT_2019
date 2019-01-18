@@ -12,13 +12,15 @@
         <a class="nav-link" routerLink="/shopping-chart">Shopping Chart</a>
       </li>
 
-     <!-- tambahkan ng if -->
-      <li *ngIf="!user" class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-
-      <!-- edit dropdown dan tambahkan ngif -->
-      <li ngbDropdown *ngIf="user" class="nav-item dropdown">
+      <!-- tambahkan ng template -->
+        <ng-template #anonymousUser>
+              <li class="nav-item">
+              <a class="nav-link" routerLink="/login">Login</a>
+            </li>
+        </ng-template>
+  
+      <!-- rubah code menggunakan async as user -->
+      <li ngbDropdown *ngIf="auth.user$ | async as user; else anonymousUser" class="nav-item dropdown">
         <!-- edit username mjd  {{user.displayName}}-->
         <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.displayName}}</a>
         <div ngbDropdownMenu class="dropdown-menu show" aria-labelledby="dropdown01">
@@ -29,8 +31,6 @@
           <a class="dropdown-item" (click)="logout()"> Log Out</a>
         </div>
       </li>
-      
     </ul>
-  
   </div>
 </nav>
