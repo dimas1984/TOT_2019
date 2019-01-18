@@ -11,6 +11,7 @@ export const environment = {
     projectId: "oshop-69b6a",
     storageBucket: "oshop-69b6a.appspot.com",
     messagingSenderId: "1009638802566"
+    
   }
 };
 

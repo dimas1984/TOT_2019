@@ -265,13 +265,22 @@
 </code></pre><p>atau</p>
 <pre><code>sudo npm install -g firebase-tools
 </code></pre><ul>
+<li>untuk mengecek version firebase</li>
+</ul>
+<pre><code>firebase --version
+</code></pre><ul>
 <li><p>login menggunakan firebase ketik code berikut</p>
 <pre><code>firebase login
 </code></pre></li>
-<li><p>akan muncul keterangan <strong>? Allow Firebase to collect anonymous CLI usage and error reporting information?</strong> pilih yes, nanti anda akan diarahkan ke account gmail anda</p>
+<li><p>akan muncul keterangan <strong>? Allow Firebase to collect anonymous CLI usage and error reporting information?</strong> pilih <strong>yes</strong>, nanti anda akan diarahkan ke account gmail anda</p>
 </li>
-<li><p>jika berhasil maka pada saat anda ketik <strong>firebase login</strong> maka akan muncul <strong>Already logged in as akunanda@gmail.com</strong></p>
+<li><p>jika berhasil maka pada saat anda ketik <strong>firebase login</strong> maka akan muncul <strong>Already logged in as akunanda@gmail.com</strong>  <strong>cat:jika anda ingin logout -&gt; ketik firebase logout</strong></p>
 </li>
+<li><p>tambahkan code berikut <strong>ket:oshop2-73960 ini adalah id project anda di firebase</strong></p>
+</li>
+</ul>
+<pre><code>firebase use -- oshop2-73960
+</code></pre><ul>
 <li><p>selanjutnya ketik code berikut </p>
 <pre><code>firebase init
 </code></pre></li>
@@ -279,9 +288,36 @@
 </ul>
 <p><img src="image/chapter1/img10.png" alt=""></p>
 <ul>
-<li>pilih Hosting</li>
-<li></li>
+<li>pilih hosting</li>
+<li>What do you want to use as your public directory? (public) dist</li>
+<li>? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) yes</li>
 </ul>
+<ul>
+<li>buka firebase.json tambahkan code berikut</li>
+</ul>
+<pre><code>{
+  &quot;hosting&quot;: {
+    &quot;public&quot;: &quot;dist&quot;
+  }
+}
+</code></pre><ul>
+<li>setelah itu ketik code ini pada terminal</li>
+</ul>
+<pre><code>ng build --prod
+</code></pre><ul>
+<li>jika berhasil maka akan muncul folder baru dist seperti pada gambar dibawah ini
+<img src="image/chapter1/img11.png" alt=""></li>
+</ul>
+<ul>
+<li>setelah itu deploy firebase <strong>ketik diterminal</strong></li>
+</ul>
+<pre><code>firebase deploy
+</code></pre><ul>
+<li>jika proses deploy berhasil maka akan muncul hosting url seperti pada gambar berikut
+<img src="image/chapter1/img12.png" alt=""></li>
+</ul>
+<p>--tambahkan index pada url agar dapat menuju ke halaman web kita
+<img src="image/chapter1/img13.png" alt=""></p>
 
                                 
                                 </section>
@@ -321,7 +357,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"8. Develop","level":"1.9","depth":1,"previous":{"title":"7. navbar","level":"1.8","depth":1,"path":"07.md","ref":"07.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"08.md","mtime":"2019-01-17T16:22:53.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-17T16:15:03.196Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"8. Develop","level":"1.9","depth":1,"previous":{"title":"7. navbar","level":"1.8","depth":1,"path":"07.md","ref":"07.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"08.md","mtime":"2019-01-18T02:30:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-18T01:52:36.394Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
