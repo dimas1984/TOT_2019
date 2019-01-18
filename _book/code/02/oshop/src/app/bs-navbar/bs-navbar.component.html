@@ -6,18 +6,21 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-     
+
       <li class="nav-item">
         <!-- 2.tambahkan routerlink -->
         <a class="nav-link" routerLink="/shopping-chart">Shopping Chart</a>
       </li>
-      <li class="nav-item">
+
+     <!-- tambahkan ng if -->
+      <li *ngIf="!user" class="nav-item">
         <a class="nav-link" routerLink="/login">Login</a>
       </li>
 
-      <!-- edit dropdown -->
-      <li ngbDropdown class="nav-item dropdown show">
-        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Username</a>
+      <!-- edit dropdown dan tambahkan ngif -->
+      <li ngbDropdown *ngIf="user" class="nav-item dropdown">
+        <!-- edit username mjd  {{user.displayName}}-->
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.displayName}}</a>
         <div ngbDropdownMenu class="dropdown-menu show" aria-labelledby="dropdown01">
           <!-- rubah code seperti dibawah ini -->
           <a class="dropdown-item" routerLink="orders">My Orders</a>

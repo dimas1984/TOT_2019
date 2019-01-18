@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth} from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'bs-navbar',
@@ -8,9 +9,11 @@ import { AngularFireAuth} from 'angularfire2/auth';
 })
 export class BsNavbarComponent {
 
+  user:firebase.User;
+
   constructor(private afAuth:AngularFireAuth) {
-    
-    afAuth.authState.subscribe(x=>console.log(x));
+
+    afAuth.authState.subscribe(user=>this.user=user);
    }
 
 
