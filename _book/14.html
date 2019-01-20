@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>14. Route · GitBook</title>
+        <title>14. Auth Guard · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -60,6 +60,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
+    
+    <link rel="next" href="15.html" />
     
     
     <link rel="prev" href="13.html" />
@@ -278,7 +280,20 @@
                 <a href="14.html">
             
                     
-                    14. Route
+                    14. Auth Guard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="15.html">
+            
+                <a href="15.html">
+            
+                    
+                    15. Redirect user setelah login
             
                 </a>
             
@@ -316,7 +331,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >14. Route</a>
+        <a href="." >14. Auth Guard</a>
     </h1>
 </div>
 
@@ -333,14 +348,10 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu membuat Route</li>
+<li>Peserta mampu membuat auth-guard</li>
 <li><a href="https://angular.io/api/router/CanActivate#description" target="_blank">https://angular.io/api/router/CanActivate#description</a></li>
 </ul>
-<h1 id="percobaan-12-menambahkan-route">Percobaan 12 menambahkan route</h1>
-<ul>
-<li>Fungsi Route pada AngularJS, yaitu kita dapat membuat sebuah link yang terdapat pada AgularJS  dan mengarahkannya pada sebuah template atau proses tertentu melalui controller, dan Route pada AngularJS berfungsi untuk membuat sebuah website yang ingin kita buat bersifat dinamis, maksudnya yaitu kita hanya menggunakan satu halaman index untuk menampilkan  data, dan pada umumnya kita menggunakan banyak halaman untuk menampilkan isi dari website kita.</li>
-</ul>
-<h3 id="membuat-route">membuat Route</h3>
+<h1 id="percobaan-12-membuat-canactive">Percobaan 12 membuat CanActive</h1>
 <ul>
 <li>sejauh ini kita belum memberikan route untuk halaman apa saja yang dapat diakses contohnya saat kita ketik <strong>localhost:4200/check-out</strong> maka web akan menampilkan halaman check out seperti pada gambar berikut:</li>
 </ul>
@@ -459,10 +470,14 @@ export class AuthGuard implements CanActivate{
 
             
                 
-                <a href="13.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 13. Service">
+                <a href="13.html" class="navigation navigation-prev " aria-label="Previous page: 13. Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
+                
+                <a href="15.html" class="navigation navigation-next " aria-label="Next page: 15. Redirect user setelah login">
+                    <i class="fa fa-angle-right"></i>
+                </a>
                 
             
         
@@ -471,7 +486,7 @@ export class AuthGuard implements CanActivate{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"14. Route","level":"1.15","depth":1,"previous":{"title":"13. Service","level":"1.14","depth":1,"path":"13.md","ref":"13.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"14.md","mtime":"2019-01-19T02:10:08.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T02:11:09.498Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"14. Auth Guard","level":"1.15","depth":1,"next":{"title":"15. Redirect user setelah login","level":"1.16","depth":1,"path":"15.md","ref":"15.md","articles":[]},"previous":{"title":"13. Service","level":"1.14","depth":1,"path":"13.md","ref":"13.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"14.md","mtime":"2019-01-19T02:16:18.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T02:11:09.498Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

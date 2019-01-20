@@ -14,4 +14,5 @@
 * [11. Menampilkan User Aktif](11.md)
 * [12. Menggunakan pipe untuk async](12.md)
 * [13. Service](13.md)
-* [14. Route](14.md)
+* [14. Auth Guard](14.md)
+* [15. Redirect user setelah login](15.md)

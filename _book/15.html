@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>10. Logout · GitBook</title>
+        <title>15. Redirect user setelah login · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="11.html" />
     
-    
-    <link rel="prev" href="09.html" />
+    <link rel="prev" href="14.html" />
     
 
     </head>
@@ -223,7 +221,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.11" data-path="10.html">
+        <li class="chapter " data-level="1.11" data-path="10.html">
             
                 <a href="10.html">
             
@@ -288,7 +286,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.16" data-path="15.html">
+        <li class="chapter active" data-level="1.16" data-path="15.html">
             
                 <a href="15.html">
             
@@ -331,7 +329,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >10. Logout</a>
+        <a href="." >15. Redirect user setelah login</a>
     </h1>
 </div>
 
@@ -348,68 +346,10 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu membuat proses logout</li>
+<li>Peserta mampu membuat route untuk user setelah login</li>
 </ul>
-<h1 id="percobaan-9-logout">Percobaan 9 Logout</h1>
-<ul>
-<li>buka halaman <strong>bs-navbar.component.html</strong> tambahkan function click pada logout, code sbb</li>
-</ul>
-<pre><code> &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
-</code></pre><ul>
-<li>buka halaman <strong>bs-navbar.component.ts</strong> buat function click pada <strong>bs-navbar.component.ts</strong> , code sbb</li>
-</ul>
-<pre><code>import { Component } from &apos;@angular/core&apos;;
-import { AngularFireAuth} from &apos;angularfire2/auth&apos;;
-
-@Component({
-  selector: &apos;bs-navbar&apos;,
-  templateUrl: &apos;./bs-navbar.component.html&apos;,
-  styleUrls: [&apos;./bs-navbar.component.css&apos;]
-})
-export class BsNavbarComponent {
-
-  constructor(private afAuth:AngularFireAuth) { }
-
-  logout(){
-    this.afAuth.auth.signOut();
-  }
-}
-</code></pre><ul>
-<li>jika kita logout maka tidak ada perubahan, untuk mengetahui perubahan pada saat di logout maka tambahkan code berikut pada <strong>constructor(private afAuth:AngularFireAuth)</strong></li>
-</ul>
-<pre><code>afAuth.authState.subscribe(x=&gt;console.log(x));
-</code></pre><ul>
-<li>sehingga hasil keseluruhan codenya sebagai berikut</li>
-</ul>
-<pre><code>import { Component } from &apos;@angular/core&apos;;
-import { AngularFireAuth} from &apos;angularfire2/auth&apos;;
-
-@Component({
-  selector: &apos;bs-navbar&apos;,
-  templateUrl: &apos;./bs-navbar.component.html&apos;,
-  styleUrls: [&apos;./bs-navbar.component.css&apos;]
-})
-export class BsNavbarComponent {
-
-  constructor(private afAuth:AngularFireAuth) {
-
-    afAuth.authState.subscribe(x=&gt;console.log(x));
-   }
-  logout(){
-    this.afAuth.auth.signOut();
-  }
-}
-</code></pre><ul>
-<li><p>langkah berikutnya <strong>inspect element</strong> pilih console <strong>terlebih dahulu login with google</strong></p>
-</li>
-<li><p>pada saat kondisi user masih belum logout seperti pada gambar berikut <strong>terdapat beberapa informasi</strong></p>
-</li>
-</ul>
-<p><img src="image/chapter2/img6.png" alt=""></p>
-<ul>
-<li>pada saat kondisi user masih sudah logout seperti pada gambar berikut <strong>null</strong></li>
-</ul>
-<p><img src="image/chapter2/img7.png" alt=""></p>
+<h1 id="percobaan-13-redirect-user-after-login">Percobaan 13 Redirect user after login</h1>
+<p>- </p>
 
                                 
                                 </section>
@@ -437,14 +377,10 @@ export class BsNavbarComponent {
 
             
                 
-                <a href="09.html" class="navigation navigation-prev " aria-label="Previous page: 9. Auth with Google Login">
+                <a href="14.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 14. Auth Guard">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="11.html" class="navigation navigation-next " aria-label="Next page: 11. Menampilkan User Aktif">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -453,7 +389,7 @@ export class BsNavbarComponent {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"10. Logout","level":"1.11","depth":1,"next":{"title":"11. Menampilkan User Aktif","level":"1.12","depth":1,"path":"11.md","ref":"11.md","articles":[]},"previous":{"title":"9. Auth with Google Login","level":"1.10","depth":1,"path":"09.md","ref":"09.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"10.md","mtime":"2019-01-18T08:05:58.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T02:11:09.498Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"15. Redirect user setelah login","level":"1.16","depth":1,"previous":{"title":"14. Auth Guard","level":"1.15","depth":1,"path":"14.md","ref":"14.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"15.md","mtime":"2019-01-19T12:14:28.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T02:11:09.498Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
