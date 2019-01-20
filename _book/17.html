@@ -61,6 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    <link rel="next" href="18.html" />
+    
     
     <link rel="prev" href="16.html" />
     
@@ -325,6 +327,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.19" data-path="18.html">
+            
+                <a href="18.html">
+            
+                    
+                    18. menampilkan dan menyembunyikan link admin 
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
 
@@ -402,7 +417,7 @@
 <pre><code>import { Injectable } from &apos;@angular/core&apos;;
 import { CanActivate } from &apos;@angular/router&apos;;
 import { AuthService } from &apos;./auth.service&apos;;
-import { Appuser } from &apos;./models/app-user&apos;;
+import { AppUser } from &apos;./models/app-user&apos;;
 import { map, switchMap} from &apos;rxjs/operators&apos;;
 import {UserService} from &apos;./user.service&apos;;
 import {Observable} from &apos;rxjs&apos;;
@@ -417,7 +432,7 @@ export class AdminAuthGuard implements CanActivate{
   canActivate():Observable&lt;boolean&gt;{
     return this.auth.user$.pipe(
       switchMap(user=&gt; this.userService.get(user.uid)),
-      map((appUser:Appuser)=&gt;appUser.isAdmin)
+      map((appUser:AppUser)=&gt;appUser.isAdmin)
     )
   }
 }
@@ -453,7 +468,7 @@ export class UserService {
 <li>buatlah satu folder dengan nama <strong>models</strong> di <strong>oshop/app</strong>dan buatlah file dengan nama <strong>app-user.ts</strong> didalam folder tersebut</li>
 <li>buka file <strong>app-user.ts</strong> tambahkan code berikut:</li>
 </ul>
-<pre><code>export interface Appuser{
+<pre><code>export interface AppUser{
     name:string;
     email:string;
     isAdmin:boolean;
@@ -516,10 +531,14 @@ export class UserService {
 
             
                 
-                <a href="16.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 16. Storing User">
+                <a href="16.html" class="navigation navigation-prev " aria-label="Previous page: 16. Storing User">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
+                
+                <a href="18.html" class="navigation navigation-next " aria-label="Next page: 18. menampilkan dan menyembunyikan link admin ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
                 
             
         
@@ -528,7 +547,7 @@ export class UserService {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"17. Admin","level":"1.18","depth":1,"previous":{"title":"16. Storing User","level":"1.17","depth":1,"path":"16.md","ref":"16.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"17.md","mtime":"2019-01-20T14:29:52.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-20T14:32:11.664Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"17. Admin","level":"1.18","depth":1,"next":{"title":"18. menampilkan dan menyembunyikan link admin ","level":"1.19","depth":1,"path":"18.md","ref":"18.md","articles":[]},"previous":{"title":"16. Storing User","level":"1.17","depth":1,"path":"16.md","ref":"16.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"17.md","mtime":"2019-01-20T22:59:13.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-20T14:32:11.664Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
