@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,5 +16,10 @@ export class UserService {
       nama: user.displayName,
       email:user.email
     });
+  }
+
+  // tambahkan get method
+  get(uid:string){
+    return this.db.object('/users/'+uid).valueChanges();
   }
 }

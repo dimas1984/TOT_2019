@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>11. Menampilkan User Aktif · GitBook</title>
+        <title>17. Admin · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="12.html" />
     
-    
-    <link rel="prev" href="10.html" />
+    <link rel="prev" href="16.html" />
     
 
     </head>
@@ -236,7 +234,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.12" data-path="11.html">
+        <li class="chapter " data-level="1.12" data-path="11.html">
             
                 <a href="11.html">
             
@@ -314,7 +312,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.18" data-path="17.html">
+        <li class="chapter active" data-level="1.18" data-path="17.html">
             
                 <a href="17.html">
             
@@ -357,7 +355,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >11. Menampilkan User Aktif</a>
+        <a href="." >17. Admin</a>
     </h1>
 </div>
 
@@ -374,101 +372,122 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu menampilkan user yang Login saat ini pada navbar</li>
+<li>Peserta mampu membuat service guard untuk admin</li>
 </ul>
-<h1 id="percobaan-10">Percobaan 10</h1>
+<h1 id="percobaan-15-membuat-service-guard-untuk-admin">Percobaan 15 membuat service guard untuk admin</h1>
 <ul>
-<li>untuk menampilkan user yang sedang login maka kita membutuhkan beberapa penambahan code pada <strong>bs-navbar.component.ts</strong></li>
-<li>buka file <strong>bs-navbar.component.ts</strong> tambahkan beberapa code sehingga hasil keseluruhan code sebagai berikut</li>
+<li>tambahkan child baru seperti pada gambar</li>
 </ul>
-<pre><code>import { Component } from &apos;@angular/core&apos;;
-import { AngularFireAuth} from &apos;angularfire2/auth&apos;;
-import * as firebase from &apos;firebase&apos;;
+<p><img src="image/chapter2/img19.png" alt=""></p>
+<ul>
+<li>jika berhasil maka tampilannya akan seperti berikut </li>
+</ul>
+<p><img src="image/chapter2/img20.png" alt=""></p>
+<ul>
+<li>generate servis baru untuk admin</li>
+</ul>
+<pre><code>ng g s admin-auth-guard
+</code></pre><ul>
+<li>buka file <strong>app.module.ts</strong> tambahkan pada providers <strong>AdminAuthGuardService rename menjadi AdminAuthGuard</strong></li>
+</ul>
+<pre><code>  providers: [
+    AuthService,
+    AuthGuard,
+    UserService,
+    AdminAuthGuard
+  ],
+</code></pre><ul>
+<li>buka file <strong>admin-auth-guard.service.ts</strong> dan tambahkan code berikut</li>
+</ul>
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { CanActivate } from &apos;@angular/router&apos;;
+import { AuthService } from &apos;./auth.service&apos;;
+import { Appuser } from &apos;./models/app-user&apos;;
+import { map, switchMap} from &apos;rxjs/operators&apos;;
+import {UserService} from &apos;./user.service&apos;;
+import {Observable} from &apos;rxjs&apos;;
 
-@Component({
-  selector: &apos;bs-navbar&apos;,
-  templateUrl: &apos;./bs-navbar.component.html&apos;,
-  styleUrls: [&apos;./bs-navbar.component.css&apos;]
+@Injectable({
+  providedIn: &apos;root&apos;
 })
-export class BsNavbarComponent {
+export class AdminAuthGuard implements CanActivate{
 
-  user:firebase.User;
+  constructor(private auth:AuthService,private userService:UserService) {}
 
-  constructor(private afAuth:AngularFireAuth) {
-
-    afAuth.authState.subscribe(user=&gt;this.user=user);
-   }
-
-
-  logout(){
-    this.afAuth.auth.signOut();
+  canActivate():Observable&lt;boolean&gt;{
+    return this.auth.user$.pipe(
+      switchMap(user=&gt; this.userService.get(user.uid)),
+      map((appUser:Appuser)=&gt;appUser.isAdmin)
+    )
   }
 }
 </code></pre><ul>
-<li>setelah menambahkan property dengan nama user pada <strong>bs-navbar.component.ts</strong> maka selanjutnya kita rubah beberapa code pada menu login, menu dropdown pada <strong>bs-navbar.component.html</strong> untuk code nya sebagai berikut</li>
+<li>buka file <strong>user.services.ts</strong> dan tambahkan code berikut:</li>
 </ul>
-<pre><code>&lt;!-- tambahkan ng if --&gt;
-      &lt;li *ngIf=&quot;!user&quot; class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
-      &lt;/li&gt;
-</code></pre><pre><code>&lt;!-- edit dropdown dan tambahkan ngif --&gt;
-      &lt;li ngbDropdown *ngIf=&quot;user&quot; class=&quot;nav-item dropdown&quot;&gt;
-        &lt;!-- edit username mjd  {{user.displayName}}--&gt;
-        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{user.displayName}}&lt;/a&gt;
-        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
-          &lt;!-- rubah code seperti dibawah ini --&gt;
-          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/li&gt;
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import * as firebase from &apos;firebase&apos;;
+import { AngularFireDatabase } from &apos;angularfire2/database&apos;;
+
+
+
+@Injectable({
+  providedIn: &apos;root&apos;
+})
+export class UserService {
+
+  constructor(private db:AngularFireDatabase) { }
+
+  save(user:firebase.User){
+    this.db.object(&apos;/users/&apos; + user.uid).update({
+      nama: user.displayName,
+      email:user.email
+    });
+  }
+
+  // tambahkan get method
+  get(uid:string){
+    return this.db.object(&apos;/users/&apos;+uid).valueChanges();
+  }
+}
 </code></pre><ul>
-<li>sehingga keseluruhan codenya seperti berikut </li>
+<li>buatlah satu folder dengan nama <strong>models</strong> di <strong>oshop/app</strong>dan buatlah file dengan nama <strong>app-user.ts</strong> didalam folder tersebut</li>
+<li>buka file <strong>app-user.ts</strong> tambahkan code berikut:</li>
 </ul>
-<pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
-  &lt;a class=&quot;navbar-brand&quot; routerLink=&quot;/&quot;&gt;O&lt;/a&gt;
-  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
-    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
-  &lt;/button&gt;
-
-  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
-    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;!-- 2.tambahkan routerlink --&gt;
-        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/shopping-chart&quot;&gt;Shopping Chart&lt;/a&gt;
-      &lt;/li&gt;
-
-     &lt;!-- tambahkan ng if --&gt;
-      &lt;li *ngIf=&quot;!user&quot; class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
-      &lt;/li&gt;
-
-      &lt;!-- edit dropdown dan tambahkan ngif --&gt;
-      &lt;li ngbDropdown *ngIf=&quot;user&quot; class=&quot;nav-item dropdown&quot;&gt;
-        &lt;!-- edit username mjd  {{user.displayName}}--&gt;
-        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{user.displayName}}&lt;/a&gt;
-        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
-          &lt;!-- rubah code seperti dibawah ini --&gt;
-          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/li&gt;
-
-    &lt;/ul&gt;
-
-  &lt;/div&gt;
-&lt;/nav&gt;
+<pre><code>export interface Appuser{
+    name:string;
+    email:string;
+    isAdmin:boolean;
+}
 </code></pre><ul>
-<li><p>jika berhasil maka tampilannya akan seperti pada gambar dibawah ini <strong>user udah login</strong> 
-<img src="image/chapter2/img8.png" alt=""></p>
-</li>
-<li><p>jika logout maka tampilan seperti pada gambar berikut
-<img src="image/chapter2/img9.png" alt=""></p>
-</li>
+<li>buka file <strong>app.module.ts</strong> tambahkan code <strong>AdminAuthGuard</strong> pada <strong>path admin/admin-products dan admin/admin-orders</strong> seperti code dibawah ini</li>
+</ul>
+<pre><code>RouterModule.forRoot(
+      [
+        {path:&apos;&apos;,component:HomeComponent},
+        {path:&apos;products&apos;,component:ProductsComponent},
+        {path:&apos;shopping-chart&apos;,component:ShoppingChartComponent},
+        {path:&apos;check-out&apos;,component:CheckOutComponent, canActivate:[AuthGuard]},
+        {path:&apos;order-success&apos;,component:OrderSuccessComponent,canActivate:[AuthGuard]},
+        {path:&apos;orders&apos;,component:MyOrdersComponent,canActivate:[AuthGuard]},
+        {path:&apos;login&apos;,component:LoginComponent},
+        {path:&apos;admin/admin-products&apos;,
+              component:AdminProductsComponent,
+              canActivate:[AuthGuard,AdminAuthGuard]},
+        {path:&apos;admin/admin-orders&apos;,
+              component:AdminOrdersComponent,
+              canActivate:[AuthGuard,AdminAuthGuard]},        
+      ]
+    )
+</code></pre><ul>
+<li>untuk mengecek keberhasilan sistem pilih menu <strong>manage order</strong>.Karena posisi awal <strong>isAdmin true</strong> maka kita akan berhasil masuk ke halaman <strong>admin-oreder works</strong> seperti pada gambar berikut</li>
+</ul>
+<p><img src="image/chapter2/img21.png" alt=""></p>
+<ul>
+<li>kita coba ganti isAdminnya menjadi false seperti pada gambar</li>
+</ul>
+<p><img src="image/chapter2/img22.png" alt=""></p>
+<ul>
+<li>kita coba pilih menu <strong>manage order</strong> dan refresh maka lihat hasilnya kita tidak dapat mengakses kembali menu  <strong>manage order</strong></li>
 </ul>
 
                                 
@@ -497,14 +516,10 @@ export class BsNavbarComponent {
 
             
                 
-                <a href="10.html" class="navigation navigation-prev " aria-label="Previous page: 10. Logout">
+                <a href="16.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 16. Storing User">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="12.html" class="navigation navigation-next " aria-label="Next page: 12. Menggunakan pipe untuk async">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -513,7 +528,7 @@ export class BsNavbarComponent {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"11. Menampilkan User Aktif","level":"1.12","depth":1,"next":{"title":"12. Menggunakan pipe untuk async","level":"1.13","depth":1,"path":"12.md","ref":"12.md","articles":[]},"previous":{"title":"10. Logout","level":"1.11","depth":1,"path":"10.md","ref":"10.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"11.md","mtime":"2019-01-18T09:25:44.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-20T14:32:11.664Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"17. Admin","level":"1.18","depth":1,"previous":{"title":"16. Storing User","level":"1.17","depth":1,"path":"16.md","ref":"16.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"17.md","mtime":"2019-01-20T14:29:52.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-20T14:32:11.664Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
