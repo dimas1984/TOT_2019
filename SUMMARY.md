@@ -15,4 +15,4 @@
 * [12. Menggunakan pipe untuk async](12.md)
 * [13. Service](13.md)
 * [14. Auth Guard](14.md)
-* [15. Redirect user](15.md)
+* [15. Local Storage](15.md)
