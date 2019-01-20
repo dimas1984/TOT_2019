@@ -16,3 +16,5 @@
 * [13. Service](13.md)
 * [14. Auth Guard](14.md)
 * [15. Local Storage](15.md)
+* [16. Storing User](16.md)
+
