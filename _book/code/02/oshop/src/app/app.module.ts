@@ -51,8 +51,7 @@ import { AuthGuard } from './auth-guard.service';
         {path:'orders',component:MyOrdersComponent,canActivate:[AuthGuard]},
         {path:'login',component:LoginComponent},
         {path:'admin/admin-products',component:AdminProductsComponent,canActivate:[AuthGuard]},
-        {path:'admin/admin-orders',component:AdminOrdersComponent,canActivate:[AuthGuard]},
-        
+        {path:'admin/admin-orders',component:AdminOrdersComponent,canActivate:[AuthGuard]},        
       ]
     )
   ],

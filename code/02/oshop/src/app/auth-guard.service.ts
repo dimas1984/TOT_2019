@@ -14,14 +14,16 @@ export class AuthGuard implements CanActivate{
   
   constructor(private auth:AuthService,private router:Router) { }
 
-    canActivate(): Observable<boolean> | Promise<boolean> | boolean
+  // tambahkan parameter route,state:RouterStateSnapshot
+    canActivate(route,state:RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
     {
       return this.auth.user$.pipe(
         map(user =>{
           if (user){
             return true;
           } 
-          this.router.navigate(["/login"]);
+          // tambahkan Sets query parameters to the URL.
+          this.router.navigate(["/login"],{queryParams:{returnUrl:state.url}});
           return false;
         })
       );

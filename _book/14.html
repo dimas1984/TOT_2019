@@ -293,7 +293,7 @@
                 <a href="15.html">
             
                     
-                    15. Redirect user setelah login
+                    15. Redirect user
             
                 </a>
             
@@ -353,11 +353,11 @@
 </ul>
 <h1 id="percobaan-12-membuat-canactive">Percobaan 12 membuat CanActive</h1>
 <ul>
-<li>sejauh ini kita belum memberikan route untuk halaman apa saja yang dapat diakses contohnya saat kita ketik <strong>localhost:4200/check-out</strong> maka web akan menampilkan halaman check out seperti pada gambar berikut:</li>
+<li>sejauh ini kita belum memberikan auth-guard untuk halaman apa saja.Sehingga user dapat mengakses halaman apa saja seperti contoh ketik alamat  <strong>localhost:4200/check-out</strong> maka web akan menampilkan halaman check out seperti pada gambar berikut:</li>
 </ul>
 <p><img src="image/chapter2/img10.png" alt=""></p>
 <ul>
-<li>untuk itu kita membutuhkan route </li>
+<li>untuk itu kita membutuhkan auth-guard </li>
 <li>langkah pertama yang harus dilakukan <strong>menggenerate service</strong> pada <strong>terminal</strong></li>
 </ul>
 <pre><code>ng g s auth-guard
@@ -386,8 +386,7 @@ export class AuthGuard {
 <pre><code>import { Observable} from &apos;rxjs&apos;;
 import { AuthService } from &apos;./auth.service&apos;;
 import { Injectable } from &apos;@angular/core&apos;;
-import { CanActivate } from &apos;@angular/router/src/utils/preactivation&apos;;
-import { Router, RouterStateSnapshot,ActivatedRouteSnapshot} from &apos;@angular/router&apos;;
+import { Router, RouterStateSnapshot,ActivatedRouteSnapshot,CanActivate} from &apos;@angular/router&apos;;
 import { map } from &apos;rxjs/operators&apos;;
 
 @Injectable({
@@ -397,26 +396,20 @@ import { map } from &apos;rxjs/operators&apos;;
 // @Injectable()
 export class AuthGuard implements CanActivate{
 
-  path:ActivatedRouteSnapshot[];
-  route:ActivatedRouteSnapshot;
 
   constructor(private auth:AuthService,private router:Router) { }
 
-    canActive(
-      next: ActivatedRouteSnapshot, 
-      state: RouterStateSnapshot
-      ):Observable&lt;boolean&gt;
+    canActivate(): Observable&lt;boolean&gt; | Promise&lt;boolean&gt; | boolean
     {
       return this.auth.user$.pipe(
         map(user =&gt;{
           if (user){
             return true;
           } 
-          this.router.navigate([&quot;/&quot;]);
+          this.router.navigate([&quot;/login&quot;]);
           return false;
         })
       );
-
     }
 }
 </code></pre><ul>
@@ -441,7 +434,7 @@ export class AuthGuard implements CanActivate{
       ]
     )
 </code></pre><ul>
-<li>jika berhasil maka saat ketik ketik <strong><a href="http://localhost:4200/check-out" target="_blank">http://localhost:4200/check-out</a></strong> maka akan kembali ke halaman utama</li>
+<li>jika berhasil maka saat ketik ketik <strong><a href="http://localhost:4200/check-out" target="_blank">http://localhost:4200/check-out</a></strong> maka akan kembali ke halaman login</li>
 </ul>
 
                                 
@@ -475,7 +468,7 @@ export class AuthGuard implements CanActivate{
                 </a>
                 
                 
-                <a href="15.html" class="navigation navigation-next " aria-label="Next page: 15. Redirect user setelah login">
+                <a href="15.html" class="navigation navigation-next " aria-label="Next page: 15. Redirect user">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -486,7 +479,7 @@ export class AuthGuard implements CanActivate{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"14. Auth Guard","level":"1.15","depth":1,"next":{"title":"15. Redirect user setelah login","level":"1.16","depth":1,"path":"15.md","ref":"15.md","articles":[]},"previous":{"title":"13. Service","level":"1.14","depth":1,"path":"13.md","ref":"13.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"14.md","mtime":"2019-01-19T02:16:18.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T02:11:09.498Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"14. Auth Guard","level":"1.15","depth":1,"next":{"title":"15. Redirect user","level":"1.16","depth":1,"path":"15.md","ref":"15.md","articles":[]},"previous":{"title":"13. Service","level":"1.14","depth":1,"path":"13.md","ref":"13.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"14.md","mtime":"2019-01-20T09:03:06.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-20T09:08:10.519Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
