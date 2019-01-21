@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" routerLink="/">O</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <!-- 2.tambahkan routerlink -->
+        <a class="nav-link" routerLink="/shopping-chart">Shopping Chart</a>
+      </li>
+
+      <!-- tambahkan ng template -->
+        <ng-template #anonymousUser>
+              <li class="nav-item">
+              <a class="nav-link" routerLink="/login">Login</a>
+            </li>
+        </ng-template>
+   
+      <!-- edit jd appUser$ -->
+      <li ngbDropdown *ngIf="appUser; else anonymousUser" class="nav-item dropdown">
+
+        <!-- edit mjd  {{appUser.name}}-->
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{appUser.nama}}</a>
+        <div ngbDropdownMenu class="dropdown-menu show" aria-labelledby="dropdown01">
+
+          <!-- rubah code seperti dibawah ini -->
+          <a class="dropdown-item" routerLink="orders">My Orders</a>
+
+          <!-- tambahkan ng container -->
+          <ng-container *ngIf="appUser.isAdmin">
+              <a class="dropdown-item" routerLink="/admin/admin-orders">Manage Orders</a>
+              <a class="dropdown-item" routerLink="/admin/admin-products">Manage Products</a>
+          </ng-container>
+         
+          <a class="dropdown-item" (click)="logout()"> Log Out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
