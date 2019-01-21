@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>18. menampilkan dan menyembunyikan link admin  · GitBook</title>
+        <title>18. menu admin dan menu user · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -330,7 +330,7 @@
                 <a href="18.html">
             
                     
-                    18. menampilkan dan menyembunyikan link admin 
+                    18. menu admin dan menu user
             
                 </a>
             
@@ -368,7 +368,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >18. menampilkan dan menyembunyikan link admin </a>
+        <a href="." >18. menu admin dan menu user</a>
     </h1>
 </div>
 
@@ -385,12 +385,171 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta menampilkan dan menyembunyikan link admin </li>
+<li>Peserta mampu mengatur menu-menu untuk admin dan user </li>
 </ul>
 <h1 id="percobaan-16-menampilkan-dan-menyembunyikan-link-admin">Percobaan 16 menampilkan dan menyembunyikan link admin</h1>
 <ul>
-<li>langkah pertama </li>
+<li>langkah pertama  buka file <strong>admin-auth-guard.service.ts</strong> dan modifikasi code seperti berikut</li>
 </ul>
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { CanActivate } from &apos;@angular/router&apos;;
+import { AuthService } from &apos;./auth.service&apos;;
+import { map} from &apos;rxjs/operators&apos;;
+import {UserService} from &apos;./user.service&apos;;
+import {Observable} from &apos;rxjs&apos;;
+
+import { AngularFireDatabase } from &apos;angularfire2/database&apos;;
+
+@Injectable({
+  providedIn: &apos;root&apos;
+})
+export class AdminAuthGuard implements CanActivate{
+
+  constructor(private auth:AuthService,private userService:UserService,private db:AngularFireDatabase,) {}
+
+  canActivate(): Observable&lt;boolean&gt; {
+    return this.auth.appUser$
+    .pipe(map(AppUser =&gt; AppUser.isAdmin));
+    }
+}
+</code></pre><ul>
+<li>buka file <strong>auth.service.ts</strong> modifikasi codenya menjadi seperti berikut <strong>tambahkan method get Appuser$</strong></li>
+</ul>
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { AngularFireAuth } from &apos;angularfire2/auth&apos;;
+import * as firebase from &apos;firebase&apos;;
+import { Observable, of  } from &apos;rxjs&apos;;
+import { ActivatedRoute } from &apos;@angular/router&apos;;
+import { AppUser } from &apos;./models/app-user&apos;;
+import { switchMap} from &apos;rxjs/operators&apos;;
+import { UserService } from &apos;./user.service&apos;;
+import { AngularFireDatabase } from &apos;angularfire2/database&apos;;
+
+
+
+@Injectable({
+  providedIn: &apos;root&apos;
+})
+export class AuthService {
+
+  user$:Observable&lt;firebase.User&gt;;
+
+
+  //tambahkan parameter ActivedRoute
+  constructor(
+    private db:AngularFireDatabase,
+    private userService:UserService,
+    private afAuth:AngularFireAuth, 
+    private route :ActivatedRoute) {
+
+    this.user$= afAuth.authState;
+   }
+
+   // tambahakan property snapshot pada route dan property queryParamMap
+  login(){
+    let returnUrl=this.route.snapshot.queryParamMap.get(&apos;returnUrl&apos;)||&apos;/&apos;;
+    localStorage.setItem(&apos;returnUrl&apos;,returnUrl);
+    this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+  }
+
+  logout(){
+    this.afAuth.auth.signOut();
+  }
+
+get appUser$() : Observable&lt;AppUser&gt; {
+
+    return this.user$.pipe(
+    switchMap(user =&gt;
+      {
+        if (user){
+          return this.db.object(&apos;/users/&apos;+ user.uid).valueChanges();
+        } else{
+          return of(null);
+        }
+      }
+     ))
+  }
+}
+</code></pre><ul>
+<li>buka file <strong>bs-navbar.component.ts</strong> modifikasi code menjadi seperti berikut :</li>
+</ul>
+<pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
+  &lt;a class=&quot;navbar-brand&quot; routerLink=&quot;/&quot;&gt;O&lt;/a&gt;
+  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
+    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+
+  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
+    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
+
+      &lt;li class=&quot;nav-item&quot;&gt;
+        &lt;!-- 2.tambahkan routerlink --&gt;
+        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/shopping-chart&quot;&gt;Shopping Chart&lt;/a&gt;
+      &lt;/li&gt;
+
+      &lt;!-- tambahkan ng template --&gt;
+        &lt;ng-template #anonymousUser&gt;
+              &lt;li class=&quot;nav-item&quot;&gt;
+              &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/ng-template&gt;
+
+      &lt;!-- edit jd appUser$ --&gt;
+      &lt;li ngbDropdown *ngIf=&quot;appUser; else anonymousUser&quot; class=&quot;nav-item dropdown&quot;&gt;
+
+        &lt;!-- edit mjd  {{appUser.name}}--&gt;
+        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{appUser.nama}}&lt;/a&gt;
+        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
+
+          &lt;!-- rubah code seperti dibawah ini --&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
+
+          &lt;!-- tambahkan ng container --&gt;
+          &lt;ng-container *ngIf=&quot;appUser.isAdmin&quot;&gt;
+              &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
+              &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
+          &lt;/ng-container&gt;
+
+          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre><ul>
+<li>buka file <strong>bs-navbar.module.ts</strong> modifikasi code sehingga seperti berikut</li>
+</ul>
+<pre><code>import { Component } from &apos;@angular/core&apos;;
+import { AuthService } from &apos;../auth.service&apos;;
+import { AppUser } from &apos;../models/app-user&apos;;
+
+
+@Component({
+  selector: &apos;bs-navbar&apos;,
+  templateUrl: &apos;./bs-navbar.component.html&apos;,
+  styleUrls: [&apos;./bs-navbar.component.css&apos;]
+})
+export class BsNavbarComponent {
+  appUser: AppUser;
+
+  constructor(private auth:AuthService) {
+    auth.appUser$.subscribe(appUser =&gt; this.appUser = appUser);
+  }
+
+  logout(){
+    this.auth.logout();
+  }
+}
+</code></pre><ul>
+<li>jalankan <strong>ng serve</strong> jika berhasil maka saat <strong>isAdmin bernilai false</strong> maka tampilannya seperti berikut</li>
+</ul>
+<p><img src="image/chapter2/img23.png" alt=""></p>
+<p><img src="image/chapter2/img24.png" alt=""></p>
+<ul>
+<li>jalankan <strong>ng serve</strong> jika berhasil maka saat <strong>isAdmin bernilai true</strong> maka tampilannya seperti berikut</li>
+</ul>
+<p><img src="image/chapter2/img25.png" alt=""></p>
+<p><img src="image/chapter2/img26.png" alt=""></p>
 
                                 
                                 </section>
@@ -430,7 +589,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"18. menampilkan dan menyembunyikan link admin ","level":"1.19","depth":1,"previous":{"title":"17. Admin","level":"1.18","depth":1,"path":"17.md","ref":"17.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"18.md","mtime":"2019-01-20T14:49:18.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-20T14:32:11.664Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"18. menu admin dan menu user","level":"1.19","depth":1,"previous":{"title":"17. Admin","level":"1.18","depth":1,"path":"17.md","ref":"17.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"18.md","mtime":"2019-01-21T13:30:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-21T13:31:03.614Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

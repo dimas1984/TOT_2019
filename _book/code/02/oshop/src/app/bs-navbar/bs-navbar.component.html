@@ -18,16 +18,23 @@
               <a class="nav-link" routerLink="/login">Login</a>
             </li>
         </ng-template>
-  
-      <!-- rubah code menggunakan async as user -->
-      <li ngbDropdown *ngIf="auth.user$ | async as user; else anonymousUser" class="nav-item dropdown">
-        <!-- edit username mjd  {{user.displayName}}-->
-        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.displayName}}</a>
+   
+      <!-- edit jd appUser$ -->
+      <li ngbDropdown *ngIf="appUser; else anonymousUser" class="nav-item dropdown">
+
+        <!-- edit mjd  {{appUser.name}}-->
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{appUser.nama}}</a>
         <div ngbDropdownMenu class="dropdown-menu show" aria-labelledby="dropdown01">
+
           <!-- rubah code seperti dibawah ini -->
           <a class="dropdown-item" routerLink="orders">My Orders</a>
-          <a class="dropdown-item" routerLink="/admin/admin-orders">Manage Orders</a>
-          <a class="dropdown-item" routerLink="/admin/admin-products">Manage Products</a>
+
+          <!-- tambahkan ng container -->
+          <ng-container *ngIf="appUser.isAdmin">
+              <a class="dropdown-item" routerLink="/admin/admin-orders">Manage Orders</a>
+              <a class="dropdown-item" routerLink="/admin/admin-products">Manage Products</a>
+          </ng-container>
+         
           <a class="dropdown-item" (click)="logout()"> Log Out</a>
         </div>
       </li>
