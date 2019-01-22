@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>21. Insert Product  · GitBook</title>
+        <title>22. validasi  · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="22.html" />
     
-    
-    <link rel="prev" href="20.html" />
+    <link rel="prev" href="21.html" />
     
 
     </head>
@@ -366,7 +364,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.22" data-path="21.html">
+        <li class="chapter " data-level="1.22" data-path="21.html">
             
                 <a href="21.html">
             
@@ -379,7 +377,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.23" data-path="22.html">
+        <li class="chapter active" data-level="1.23" data-path="22.html">
             
                 <a href="22.html">
             
@@ -422,7 +420,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >21. Insert Product </a>
+        <a href="." >22. validasi </a>
     </h1>
 </div>
 
@@ -439,16 +437,19 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu menyimpan product ke firebase</li>
+<li>Peserta mampu menerapkan validasi </li>
 </ul>
-<h1 id="percobaan-20--insert-product-ke-firebase">Percobaan 20  Insert product ke firebase</h1>
+<h1 id="percobaan-21--validasi">Percobaan 21  validasi</h1>
 <ul>
-<li>tambahkan <strong>ngModel</strong> pada file <strong>product-form.component.html</strong> dan <strong>method save</strong></li>
+<li>buka file <strong>product-form.component.html</strong> modfikasi code  sehingga seperti berikut</li>
 </ul>
 <pre><code>&lt;form #f=&quot;ngForm&quot; (ngSubmit)=&quot;save(f.value)&quot;&gt; 
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
-    &lt;input ngModel name=&quot;title&quot; type=&quot;text&quot; id=&quot;title&quot; class=&quot;form-control&quot;&gt;
+    &lt;input #title=&quot;ngModel&quot; ngModel name=&quot;title&quot; type=&quot;text&quot; id=&quot;title&quot; class=&quot;form-control&quot; required&gt;
+    &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;title.touched &amp;&amp; title.invalid&quot;&gt;
+      Title is required
+    &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;form-group&quot;&gt;
@@ -457,197 +458,42 @@
       &lt;div class=&quot;input-group-prepend&quot;&gt;
         &lt;span class=&quot;input-group-text&quot;&gt;$&lt;/span&gt;
       &lt;/div&gt;
-      &lt;input  ngModel name=&quot;price&quot; id =&quot;price&quot; type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+      &lt;input  #price=&quot;ngModel&quot; ngModel name=&quot;price&quot; id =&quot;price&quot; type=&quot;text&quot; class=&quot;form-control&quot; required&gt;
+      &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;price.touched &amp;&amp; price.invalid&quot;&gt;
+          price is required
+        &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;category&quot;&gt;Category&lt;/label&gt;
-    &lt;select  ngModel name=&quot;category&quot;  type=&quot;text&quot; id=&quot;category&quot; class=&quot;form-control&quot;&gt;
+    &lt;select #category=&quot;ngModel&quot; ngModel name=&quot;category&quot;  type=&quot;text&quot; id=&quot;category&quot; class=&quot;form-control&quot; required&gt;
       &lt;option value=&quot;&quot;&gt;&lt;/option&gt;
       &lt;!-- tambahkan code berikut --&gt;
       &lt;option *ngFor=&quot;let c of categories$ | async&quot; [value]=&quot;c.key&quot;&gt;
         {{c.key}}
       &lt;/option&gt;
     &lt;/select&gt;
+    &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;category.touched &amp;&amp; category.invalid&quot;&gt;
+        category is required
+      &lt;/div&gt;
   &lt;/div&gt;
+
 
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;!-- rubah image-url menjadi imageurl agar memudahkan --&gt;
     &lt;label for=&quot;imageurl&quot;&gt;Image Url&lt;/label&gt;
-    &lt;input  ngModel name=&quot;imageurl&quot;  type=&quot;text&quot; id=&quot;imageurl&quot; class=&quot;form-control&quot;&gt;
-  &lt;/div&gt;
+    &lt;input #imageurl=&quot;ngModel&quot;  ngModel name=&quot;imageurl&quot;  type=&quot;text&quot; id=&quot;imageurl&quot; class=&quot;form-control&quot; required&gt;
+    &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;imageurl.touched &amp;&amp; imageurl.invalid&quot;&gt;
+        Image Url is required
+      &lt;/div&gt;
+  &lt;/div&gt; 
   &lt;button class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
 &lt;/form&gt;
 </code></pre><ul>
-<li>buka file <strong>app.module.ts</strong> dan  <strong>import formModule</strong></li>
+<li>lakukan uji coba dengan tidak memasukkan inputan, jika berhasil maka tampillan akan seperti pada gambar</li>
 </ul>
-<pre><code>import { FormsModule } from &apos;@angular/forms&apos;;
-</code></pre><ul>
-<li>tambahkan juga pada <strong>imports</strong></li>
-</ul>
-<pre><code>FormsModule
-</code></pre><ul>
-<li>sehingga keseluruhan code pada <strong>app.module.ts</strong> sebagai berikut</li>
-</ul>
-<pre><code>import { BrowserModule } from &apos;@angular/platform-browser&apos;;
-import { NgModule } from &apos;@angular/core&apos;;
-import { AngularFireModule } from &apos;angularfire2&apos;;
-import { AngularFireDatabaseModule } from &apos;angularfire2/database&apos;;
-import { AngularFireAuthModule } from &apos;angularfire2/auth&apos;;
-import { environment } from &apos;src/environments/environment&apos;;
-import { RouterModule} from &apos;@angular/router&apos;;
-import { NgbModule} from &apos;@ng-bootstrap/ng-bootstrap&apos;;
-
-
-import { AppComponent } from &apos;./app.component&apos;;
-import { BsNavbarComponent } from &apos;./bs-navbar/bs-navbar.component&apos;;
-import { HomeComponent } from &apos;./home/home.component&apos;;
-import { ProductsComponent } from &apos;./products/products.component&apos;;
-import { ShoppingChartComponent } from &apos;./shopping-chart/shopping-chart.component&apos;;
-import { CheckOutComponent } from &apos;./check-out/check-out.component&apos;;
-import { OrderSuccessComponent } from &apos;./order-success/order-success.component&apos;;
-import { MyOrdersComponent } from &apos;./my-orders/my-orders.component&apos;;
-import { AdminProductsComponent } from &apos;./admin/admin-products/admin-products.component&apos;;
-import { AdminOrdersComponent } from &apos;./admin/admin-orders/admin-orders.component&apos;;
-import { LoginComponent } from &apos;./login/login.component&apos;;
-import { AuthService } from &apos;./auth.service&apos;;
-import { AuthGuard } from &apos;./auth-guard.service&apos;;
-import { UserService } from &apos;./user.service&apos;;
-import { AdminAuthGuard } from &apos;./admin-auth-guard.service&apos;;
-import { ProductFormComponent } from &apos;./admin/product-form/product-form.component&apos;;
-import { CategoryService } from &apos;./category.service&apos;;
-import { FormsModule } from &apos;@angular/forms&apos;;
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    BsNavbarComponent,
-    HomeComponent,
-    ProductsComponent,
-    ShoppingChartComponent,
-    CheckOutComponent,
-    OrderSuccessComponent,
-    MyOrdersComponent,
-    AdminProductsComponent,
-    AdminOrdersComponent,
-    LoginComponent,
-    ProductFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    NgbModule.forRoot(),
-    RouterModule.forRoot(
-      [
-        {path:&apos;&apos;,component:HomeComponent},
-        {path:&apos;products&apos;,component:ProductsComponent},
-        {path:&apos;shopping-chart&apos;,component:ShoppingChartComponent},
-        {path:&apos;check-out&apos;,component:CheckOutComponent, canActivate:[AuthGuard]},
-        {path:&apos;order-success&apos;,component:OrderSuccessComponent,canActivate:[AuthGuard]},
-        {path:&apos;orders&apos;,component:MyOrdersComponent,canActivate:[AuthGuard]},
-        {path:&apos;login&apos;,component:LoginComponent},
-        {path:&apos;admin/admin-products&apos;,
-              component:AdminProductsComponent,
-              canActivate:[AuthGuard,AdminAuthGuard]},
-        {path:&apos;admin/admin-products/new&apos;,
-              component:ProductFormComponent,
-              canActivate:[AuthGuard,AdminAuthGuard]},
-        {path:&apos;admin/admin-orders&apos;,
-              component:AdminOrdersComponent,
-              canActivate:[AuthGuard,AdminAuthGuard]},        
-      ]
-    )
-  ],
-  providers: [
-    AuthService,
-    AuthGuard,
-    UserService,
-    AdminAuthGuard,
-    CategoryService
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-</code></pre><ul>
-<li>buka file <strong>product-form.component.ts</strong> tambahkan sebuah method save dan tambahkan code berikut untuk mengecek inputan</li>
-</ul>
-<pre><code>   save(product){
-     console.log(product);
-   }
-</code></pre><ul>
-<li>isikan form dengan sebarang data dan save jika benar maka tampilannya akan seperti berikut:</li>
-</ul>
-<p><img src="image/chapter3/img7.png" alt=""></p>
-<ul>
-<li>generate <strong>service</strong> baru dengan nama <strong>product</strong></li>
-</ul>
-<pre><code>ng g s product
-</code></pre><ul>
-<li>tambah <strong>product service pada app.module.ts</strong></li>
-</ul>
-<pre><code> providers: [
-    AuthService,
-    AuthGuard,
-    UserService,
-    AdminAuthGuard,
-    CategoryService,
-    ProductService
-  ],
-</code></pre><ul>
-<li>buka file <strong>product-form.component.ts</strong> dan modifikasi codenya menjadi</li>
-</ul>
-<pre><code>import { Component, OnInit } from &apos;@angular/core&apos;;
-import { CategoryService } from &apos;src/app/category.service&apos;;
-import { ProductService } from &apos;src/app/product.service&apos;;
-
-@Component({
-  selector: &apos;app-product-form&apos;,
-  templateUrl: &apos;./product-form.component.html&apos;,
-  styleUrls: [&apos;./product-form.component.css&apos;]
-})
-export class ProductFormComponent implements OnInit {
-
-  categories$;
-
-  constructor(categoryService:CategoryService,private productService:ProductService) {
-    this.categories$=categoryService.getCategories();
-   }
-
-   save(product){
-    //  console.log(product);
-    this.productService.create(product);
-
-   }
-
-  ngOnInit() {
-  }
-
-}
-</code></pre><ul>
-<li>buka file <strong>product.service.ts</strong> tambahkan code berikut </li>
-</ul>
-<pre><code>import { Injectable } from &apos;@angular/core&apos;;
-import { AngularFireDatabase } from &apos;angularfire2/database&apos;;
-
-@Injectable({
-  providedIn: &apos;root&apos;
-})
-export class ProductService {
-
-  constructor(private db:AngularFireDatabase) { }
-
-  create(product){
-    return this.db.list(&apos;/products&apos;).push(product);
-  }
-}
-</code></pre><ul>
-<li>lakukan uji coba masukkan file isikan form , save dan buka firebase anda, jika berhasil maka tampillan akan seperti pada gambar</li>
-</ul>
-<p><img src="image/chapter3/img8.png" alt=""></p>
+<p><img src="image/chapter3/img9.png" alt=""></p>
 
                                 
                                 </section>
@@ -675,14 +521,10 @@ export class ProductService {
 
             
                 
-                <a href="20.html" class="navigation navigation-prev " aria-label="Previous page: 20. DropDown List ">
+                <a href="21.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 21. Insert Product ">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="22.html" class="navigation navigation-next " aria-label="Next page: 22. validasi ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -691,7 +533,7 @@ export class ProductService {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"21. Insert Product ","level":"1.22","depth":1,"next":{"title":"22. validasi ","level":"1.23","depth":1,"path":"22.md","ref":"22.md","articles":[]},"previous":{"title":"20. DropDown List ","level":"1.21","depth":1,"path":"20.md","ref":"20.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"21.md","mtime":"2019-01-22T02:24:44.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T03:20:28.017Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"22. validasi ","level":"1.23","depth":1,"previous":{"title":"21. Insert Product ","level":"1.22","depth":1,"path":"21.md","ref":"21.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"22.md","mtime":"2019-01-22T03:20:19.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T03:20:28.017Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
