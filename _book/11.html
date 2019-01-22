@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>3. Install Bootstrap 4 dan konfigurasi · GitBook</title>
+        <title>11. Menampilkan User Aktif · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="04.html" />
+    <link rel="next" href="12.html" />
     
     
-    <link rel="prev" href="02.html" />
+    <link rel="prev" href="10.html" />
     
 
     </head>
@@ -132,7 +132,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="03.html">
+        <li class="chapter " data-level="1.4" data-path="03.html">
             
                 <a href="03.html">
             
@@ -236,7 +236,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.12" data-path="11.html">
+        <li class="chapter active" data-level="1.12" data-path="11.html">
             
                 <a href="11.html">
             
@@ -409,7 +409,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >3. Install Bootstrap 4 dan konfigurasi</a>
+        <a href="." >11. Menampilkan User Aktif</a>
     </h1>
 </div>
 
@@ -426,82 +426,101 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu menginstall bootstrap4 pada angular</li>
+<li>Peserta mampu menampilkan user yang Login saat ini pada navbar</li>
 </ul>
-<h1 id="percobaan-2-install-bootstrap-4-pada-angular">Percobaan 2 Install bootstrap 4 pada angular</h1>
-<h3 id="instalasi-bootstrap-4">Instalasi bootstrap 4</h3>
+<h1 id="percobaan-10">Percobaan 10</h1>
 <ul>
-<li>buka terminal <strong>(cat: pastikan proses install di folder oshop)</strong></li>
-<li>ketik kode berikut</li>
+<li>untuk menampilkan user yang sedang login maka kita membutuhkan beberapa penambahan code pada <strong>bs-navbar.component.ts</strong></li>
+<li>buka file <strong>bs-navbar.component.ts</strong> tambahkan beberapa code sehingga hasil keseluruhan code sebagai berikut</li>
 </ul>
-<pre><code>npm i --save bootstrap@4
+<pre><code>import { Component } from &apos;@angular/core&apos;;
+import { AngularFireAuth} from &apos;angularfire2/auth&apos;;
+import * as firebase from &apos;firebase&apos;;
+
+@Component({
+  selector: &apos;bs-navbar&apos;,
+  templateUrl: &apos;./bs-navbar.component.html&apos;,
+  styleUrls: [&apos;./bs-navbar.component.css&apos;]
+})
+export class BsNavbarComponent {
+
+  user:firebase.User;
+
+  constructor(private afAuth:AngularFireAuth) {
+
+    afAuth.authState.subscribe(user=&gt;this.user=user);
+   }
+
+
+  logout(){
+    this.afAuth.auth.signOut();
+  }
+}
 </code></pre><ul>
-<li>buka angular.json <strong>(oshop/angular.json)</strong></li>
-<li>tambahkan code berikut pada styles angular.json pada project olshop</li>
+<li>setelah menambahkan property dengan nama user pada <strong>bs-navbar.component.ts</strong> maka selanjutnya kita rubah beberapa code pada menu login, menu dropdown pada <strong>bs-navbar.component.html</strong> untuk code nya sebagai berikut</li>
 </ul>
-<pre><code>&quot;node_modules/bootstrap/dist/css/bootstrap.min.css&quot;,
+<pre><code>&lt;!-- tambahkan ng if --&gt;
+      &lt;li *ngIf=&quot;!user&quot; class=&quot;nav-item&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
+      &lt;/li&gt;
+</code></pre><pre><code>&lt;!-- edit dropdown dan tambahkan ngif --&gt;
+      &lt;li ngbDropdown *ngIf=&quot;user&quot; class=&quot;nav-item dropdown&quot;&gt;
+        &lt;!-- edit username mjd  {{user.displayName}}--&gt;
+        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{user.displayName}}&lt;/a&gt;
+        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
+          &lt;!-- rubah code seperti dibawah ini --&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
 </code></pre><ul>
-<li>sehingga hasil code nya seperti ini</li>
-</ul>
-<pre><code>&quot;styles&quot;: [
-  &quot;node_modules/bootstrap/dist/css/bootstrap.min.css&quot;,
-  &quot;styles.scss&quot;
-]
-</code></pre><ul>
-<li>buka file <strong>app.component.html</strong> <strong>(oshop/app/app.component.html)</strong></li>
-<li>tambahkan code berikut </li>
+<li>sehingga keseluruhan codenya seperti berikut </li>
 </ul>
 <pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
-  &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
+  &lt;a class=&quot;navbar-brand&quot; routerLink=&quot;/&quot;&gt;O&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
     &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
   &lt;/button&gt;
 
   &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
     &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-      &lt;li class=&quot;nav-item active&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
-      &lt;/li&gt;
+
       &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+        &lt;!-- 2.tambahkan routerlink --&gt;
+        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/shopping-chart&quot;&gt;Shopping Chart&lt;/a&gt;
       &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+
+     &lt;!-- tambahkan ng if --&gt;
+      &lt;li *ngIf=&quot;!user&quot; class=&quot;nav-item&quot;&gt;
+        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
       &lt;/li&gt;
-      &lt;li class=&quot;nav-item dropdown&quot;&gt;
-        &lt;a class=&quot;nav-link dropdown-toggle&quot; href=&quot;#&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;Dropdown&lt;/a&gt;
-        &lt;div class=&quot;dropdown-menu&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+
+      &lt;!-- edit dropdown dan tambahkan ngif --&gt;
+      &lt;li ngbDropdown *ngIf=&quot;user&quot; class=&quot;nav-item dropdown&quot;&gt;
+        &lt;!-- edit username mjd  {{user.displayName}}--&gt;
+        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{user.displayName}}&lt;/a&gt;
+        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
+          &lt;!-- rubah code seperti dibawah ini --&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
         &lt;/div&gt;
       &lt;/li&gt;
+
     &lt;/ul&gt;
-    &lt;form class=&quot;form-inline my-2 my-lg-0&quot;&gt;
-      &lt;input class=&quot;form-control mr-sm-2&quot; type=&quot;text&quot; placeholder=&quot;Search&quot; aria-label=&quot;Search&quot;&gt;
-      &lt;button class=&quot;btn btn-secondary my-2 my-sm-0&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
-    &lt;/form&gt;
+
   &lt;/div&gt;
 &lt;/nav&gt;
-
-&lt;div class=&quot;container&quot;&gt;
-
-  &lt;div class=&quot;starter-template&quot;&gt;
-    &lt;h1&gt;Bootstrap starter template&lt;/h1&gt;
-    &lt;p class=&quot;lead&quot;&gt;Use this document as a way to quickly start any new project.&lt;br&gt; All you get is this text and a mostly barebones HTML document.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;&lt;!-- /.container --&gt;
 </code></pre><ul>
-<li><p>untuk melihat hasilnya ketik <strong>ng serve</strong> -&gt;img4.png
-<img src="image/chapter1/img4.png" alt=""></p>
+<li><p>jika berhasil maka tampilannya akan seperti pada gambar dibawah ini <strong>user udah login</strong> 
+<img src="image/chapter2/img8.png" alt=""></p>
 </li>
-<li><p>tambahkan code berikut pada <strong>styles.css</strong> <strong>(olshop/src/styles.css)</strong></p>
+<li><p>jika logout maka tampilan seperti pada gambar berikut
+<img src="image/chapter2/img9.png" alt=""></p>
 </li>
-</ul>
-<pre><code>body {padding-top: 80px};
-</code></pre><ul>
-<li>sehingga hasilnya menjadi 
-<img src="image/chapter1/img5.png" alt=""></li>
 </ul>
 
                                 
@@ -530,12 +549,12 @@
 
             
                 
-                <a href="02.html" class="navigation navigation-prev " aria-label="Previous page: 2. Membuat Project Baru dan Konfigurasi">
+                <a href="10.html" class="navigation navigation-prev " aria-label="Previous page: 10. Logout">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="04.html" class="navigation navigation-next " aria-label="Next page: 4. Membuat Component Baru">
+                <a href="12.html" class="navigation navigation-next " aria-label="Next page: 12. Menggunakan pipe untuk async">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -546,7 +565,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3. Install Bootstrap 4 dan konfigurasi","level":"1.4","depth":1,"next":{"title":"4. Membuat Component Baru","level":"1.5","depth":1,"path":"04.md","ref":"04.md","articles":[]},"previous":{"title":"2. Membuat Project Baru dan Konfigurasi","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"03.md","mtime":"2019-01-17T12:08:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T01:19:41.136Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"11. Menampilkan User Aktif","level":"1.12","depth":1,"next":{"title":"12. Menggunakan pipe untuk async","level":"1.13","depth":1,"path":"12.md","ref":"12.md","articles":[]},"previous":{"title":"10. Logout","level":"1.11","depth":1,"path":"10.md","ref":"10.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"11.md","mtime":"2019-01-18T09:25:44.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T01:19:41.136Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

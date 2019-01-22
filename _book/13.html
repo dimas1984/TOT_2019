@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>3. Install Bootstrap 4 dan konfigurasi · GitBook</title>
+        <title>13. Service · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="04.html" />
+    <link rel="next" href="14.html" />
     
     
-    <link rel="prev" href="02.html" />
+    <link rel="prev" href="12.html" />
     
 
     </head>
@@ -132,7 +132,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="03.html">
+        <li class="chapter " data-level="1.4" data-path="03.html">
             
                 <a href="03.html">
             
@@ -262,7 +262,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.14" data-path="13.html">
+        <li class="chapter active" data-level="1.14" data-path="13.html">
             
                 <a href="13.html">
             
@@ -409,7 +409,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >3. Install Bootstrap 4 dan konfigurasi</a>
+        <a href="." >13. Service</a>
     </h1>
 </div>
 
@@ -426,82 +426,139 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu menginstall bootstrap4 pada angular</li>
+<li>Peserta mampu membuat service untuk login dan logout</li>
 </ul>
-<h1 id="percobaan-2-install-bootstrap-4-pada-angular">Percobaan 2 Install bootstrap 4 pada angular</h1>
-<h3 id="instalasi-bootstrap-4">Instalasi bootstrap 4</h3>
+<h1 id="percobaan-12-menambahkan-service">Percobaan 12 menambahkan service</h1>
 <ul>
-<li>buka terminal <strong>(cat: pastikan proses install di folder oshop)</strong></li>
-<li>ketik kode berikut</li>
+<li>Service atau Provider dalam Angular sendiri sudah diperkenalkan sejak AngularJS v.1.x, dimana service menjadi bagian yang Injectable dari kode Angular sehingga pada prakteknya sering digunakan sebagai pembungkusan (Encapsulation) dari suatu logic. Angular sendiri sudah menggunakan depedency injection (DI) sejak AngularJS versi 1.x sehingga lebih mudah untuk meng-inject atau memasukkan service kedalam komponen yang ingin menggunakannya.</li>
 </ul>
-<pre><code>npm i --save bootstrap@4
-</code></pre><ul>
-<li>buka angular.json <strong>(oshop/angular.json)</strong></li>
-<li>tambahkan code berikut pada styles angular.json pada project olshop</li>
+<h3 id="membuat-service">membuat service</h3>
+<ul>
+<li>untuk membuat sebuah service harus generate terlebih dahulu menggunakan <strong>terminal</strong> untuk codenya sebagai berikut:</li>
 </ul>
-<pre><code>&quot;node_modules/bootstrap/dist/css/bootstrap.min.css&quot;,
+<pre><code>ng g s auth
 </code></pre><ul>
-<li>sehingga hasil code nya seperti ini</li>
+<li><p>keterangan <strong>g (global)</strong>, <strong>s (service)</strong>, <strong>auth (nama_file)</strong></p>
+</li>
+<li><p>setelah berhasil membuat sebuah service maka langkah berikutnya tambahkan pada <strong>providers</strong> pada <strong>app.module.ts</strong></p>
+</li>
+<li>buka file <strong>app.module.ts</strong><pre><code>providers: [
+  AuthService
+],
+</code></pre></li>
+<li>buka file <strong>auth.service.ts</strong> tambahkan code berikut:</li>
 </ul>
-<pre><code>&quot;styles&quot;: [
-  &quot;node_modules/bootstrap/dist/css/bootstrap.min.css&quot;,
-  &quot;styles.scss&quot;
-]
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { AngularFireAuth } from &apos;angularfire2/auth&apos;;
+import * as firebase from &apos;firebase&apos;;
+import { Observable } from &apos;rxjs/internal/Observable&apos;;
+
+@Injectable({
+  providedIn: &apos;root&apos;
+})
+export class AuthService {
+
+  user$:Observable&lt;firebase.User&gt;;
+
+  constructor(private afAuth:AngularFireAuth) {
+
+    this.user$= afAuth.authState;
+   }
+
+  login(){
+    this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+  }
+
+  logout(){
+    this.afAuth.auth.signOut();
+  }
+}
 </code></pre><ul>
-<li>buka file <strong>app.component.html</strong> <strong>(oshop/app/app.component.html)</strong></li>
-<li>tambahkan code berikut </li>
+<li>buka file <strong>login.component.ts</strong> dan modifikasi codenya menjadi seperti berikut </li>
+</ul>
+<pre><code>import { Component } from &apos;@angular/core&apos;;
+import { AuthService } from &apos;../auth.service&apos;;
+
+@Component({
+  selector: &apos;app-login&apos;,
+  templateUrl: &apos;./login.component.html&apos;,
+  styleUrls: [&apos;./login.component.css&apos;]
+})
+export class LoginComponent {
+
+  constructor(private auth:AuthService) { }
+
+  login(){
+    this.auth.login();
+  }
+
+}
+</code></pre><ul>
+<li>buka file <strong>bs-navbar.component.ts</strong> dan modifikasi codenya seperti berikut</li>
+</ul>
+<pre><code>import { Component } from &apos;@angular/core&apos;;
+import { AuthService } from &apos;../auth.service&apos;;
+
+
+@Component({
+  selector: &apos;bs-navbar&apos;,
+  templateUrl: &apos;./bs-navbar.component.html&apos;,
+  styleUrls: [&apos;./bs-navbar.component.css&apos;]
+})
+export class BsNavbarComponent {
+
+  constructor(public auth:AuthService) {}
+
+  logout(){
+    this.auth.logout();
+  }
+}
+</code></pre><ul>
+<li>buka file <strong>bs-navbar.component.hmtl</strong> tambahkan code berikut <strong>auth.user</strong></li>
+</ul>
+<pre><code> &lt;li ngbDropdown *ngIf=&quot;auth.user$ | async as user; else anonymousUser&quot; class=&quot;nav-item dropdown&quot;&gt;
+</code></pre><ul>
+<li>sehingga kesuluruhan code pada <strong>bs-navbar.component.html</strong></li>
 </ul>
 <pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
-  &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
+  &lt;a class=&quot;navbar-brand&quot; routerLink=&quot;/&quot;&gt;O&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
     &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
   &lt;/button&gt;
 
   &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
     &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-      &lt;li class=&quot;nav-item active&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
-      &lt;/li&gt;
+
       &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+        &lt;!-- 2.tambahkan routerlink --&gt;
+        &lt;a class=&quot;nav-link&quot; routerLink=&quot;/shopping-chart&quot;&gt;Shopping Chart&lt;/a&gt;
       &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item dropdown&quot;&gt;
-        &lt;a class=&quot;nav-link dropdown-toggle&quot; href=&quot;#&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;Dropdown&lt;/a&gt;
-        &lt;div class=&quot;dropdown-menu&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+
+      &lt;!-- tambahkan ng template --&gt;
+        &lt;ng-template #anonymousUser&gt;
+              &lt;li class=&quot;nav-item&quot;&gt;
+              &lt;a class=&quot;nav-link&quot; routerLink=&quot;/login&quot;&gt;Login&lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/ng-template&gt;
+
+      &lt;!-- rubah code menggunakan async as user --&gt;
+      &lt;li ngbDropdown *ngIf=&quot;auth.user$ | async as user; else anonymousUser&quot; class=&quot;nav-item dropdown&quot;&gt;
+        &lt;!-- edit username mjd  {{user.displayName}}--&gt;
+        &lt;a ngbDropdownToggle class=&quot;nav-link dropdown-toggle&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;{{user.displayName}}&lt;/a&gt;
+        &lt;div ngbDropdownMenu class=&quot;dropdown-menu show&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
+          &lt;!-- rubah code seperti dibawah ini --&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;orders&quot;&gt;My Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-orders&quot;&gt;Manage Orders&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; routerLink=&quot;/admin/admin-products&quot;&gt;Manage Products&lt;/a&gt;
+          &lt;a class=&quot;dropdown-item&quot; (click)=&quot;logout()&quot;&gt; Log Out&lt;/a&gt;
         &lt;/div&gt;
-      &lt;/li&gt;
+      &lt;/li&gt;     
     &lt;/ul&gt;
-    &lt;form class=&quot;form-inline my-2 my-lg-0&quot;&gt;
-      &lt;input class=&quot;form-control mr-sm-2&quot; type=&quot;text&quot; placeholder=&quot;Search&quot; aria-label=&quot;Search&quot;&gt;
-      &lt;button class=&quot;btn btn-secondary my-2 my-sm-0&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
-    &lt;/form&gt;
   &lt;/div&gt;
 &lt;/nav&gt;
-
-&lt;div class=&quot;container&quot;&gt;
-
-  &lt;div class=&quot;starter-template&quot;&gt;
-    &lt;h1&gt;Bootstrap starter template&lt;/h1&gt;
-    &lt;p class=&quot;lead&quot;&gt;Use this document as a way to quickly start any new project.&lt;br&gt; All you get is this text and a mostly barebones HTML document.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;&lt;!-- /.container --&gt;
 </code></pre><ul>
-<li><p>untuk melihat hasilnya ketik <strong>ng serve</strong> -&gt;img4.png
-<img src="image/chapter1/img4.png" alt=""></p>
-</li>
-<li><p>tambahkan code berikut pada <strong>styles.css</strong> <strong>(olshop/src/styles.css)</strong></p>
-</li>
-</ul>
-<pre><code>body {padding-top: 80px};
-</code></pre><ul>
-<li>sehingga hasilnya menjadi 
-<img src="image/chapter1/img5.png" alt=""></li>
+<li>jika berhasil maka tampilan seperti pada gambar berikut <strong>saat login</strong>
+<img src="image/chapter2/img8.png" alt=""></li>
 </ul>
 
                                 
@@ -530,12 +587,12 @@
 
             
                 
-                <a href="02.html" class="navigation navigation-prev " aria-label="Previous page: 2. Membuat Project Baru dan Konfigurasi">
+                <a href="12.html" class="navigation navigation-prev " aria-label="Previous page: 12. Menggunakan pipe untuk async">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="04.html" class="navigation navigation-next " aria-label="Next page: 4. Membuat Component Baru">
+                <a href="14.html" class="navigation navigation-next " aria-label="Next page: 14. Auth Guard">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -546,7 +603,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3. Install Bootstrap 4 dan konfigurasi","level":"1.4","depth":1,"next":{"title":"4. Membuat Component Baru","level":"1.5","depth":1,"path":"04.md","ref":"04.md","articles":[]},"previous":{"title":"2. Membuat Project Baru dan Konfigurasi","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"03.md","mtime":"2019-01-17T12:08:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T01:19:41.136Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"13. Service","level":"1.14","depth":1,"next":{"title":"14. Auth Guard","level":"1.15","depth":1,"path":"14.md","ref":"14.md","articles":[]},"previous":{"title":"12. Menggunakan pipe untuk async","level":"1.13","depth":1,"path":"12.md","ref":"12.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"13.md","mtime":"2019-01-21T14:11:21.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T01:19:41.136Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

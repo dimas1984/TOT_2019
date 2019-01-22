@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>3. Install Bootstrap 4 dan konfigurasi · GitBook</title>
+        <title>20. DropDown List  · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="04.html" />
+    <link rel="next" href="21.html" />
     
     
-    <link rel="prev" href="02.html" />
+    <link rel="prev" href="19.html" />
     
 
     </head>
@@ -132,7 +132,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="03.html">
+        <li class="chapter " data-level="1.4" data-path="03.html">
             
                 <a href="03.html">
             
@@ -353,7 +353,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.21" data-path="20.html">
+        <li class="chapter active" data-level="1.21" data-path="20.html">
             
                 <a href="20.html">
             
@@ -409,7 +409,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >3. Install Bootstrap 4 dan konfigurasi</a>
+        <a href="." >20. DropDown List </a>
     </h1>
 </div>
 
@@ -426,84 +426,119 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu menginstall bootstrap4 pada angular</li>
+<li>Peserta mampu menampilkan list dropdown dari firebase</li>
 </ul>
-<h1 id="percobaan-2-install-bootstrap-4-pada-angular">Percobaan 2 Install bootstrap 4 pada angular</h1>
-<h3 id="instalasi-bootstrap-4">Instalasi bootstrap 4</h3>
+<h1 id="percobaan-19-menampilkan-list-dropdown-dari-firebase">Percobaan 19 menampilkan list dropdown dari firebase</h1>
 <ul>
-<li>buka terminal <strong>(cat: pastikan proses install di folder oshop)</strong></li>
-<li>ketik kode berikut</li>
+<li>buka halaman firebase anda dan tambahkan beberapa <strong>add child</strong> pada project anda seperti pada gambar berikut</li>
 </ul>
-<pre><code>npm i --save bootstrap@4
-</code></pre><ul>
-<li>buka angular.json <strong>(oshop/angular.json)</strong></li>
-<li>tambahkan code berikut pada styles angular.json pada project olshop</li>
-</ul>
-<pre><code>&quot;node_modules/bootstrap/dist/css/bootstrap.min.css&quot;,
-</code></pre><ul>
-<li>sehingga hasil code nya seperti ini</li>
-</ul>
-<pre><code>&quot;styles&quot;: [
-  &quot;node_modules/bootstrap/dist/css/bootstrap.min.css&quot;,
-  &quot;styles.scss&quot;
-]
-</code></pre><ul>
-<li>buka file <strong>app.component.html</strong> <strong>(oshop/app/app.component.html)</strong></li>
-<li>tambahkan code berikut </li>
-</ul>
-<pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
-  &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
-  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
-    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
-  &lt;/button&gt;
-
-  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
-    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-      &lt;li class=&quot;nav-item active&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item dropdown&quot;&gt;
-        &lt;a class=&quot;nav-link dropdown-toggle&quot; href=&quot;#&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;Dropdown&lt;/a&gt;
-        &lt;div class=&quot;dropdown-menu&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;form class=&quot;form-inline my-2 my-lg-0&quot;&gt;
-      &lt;input class=&quot;form-control mr-sm-2&quot; type=&quot;text&quot; placeholder=&quot;Search&quot; aria-label=&quot;Search&quot;&gt;
-      &lt;button class=&quot;btn btn-secondary my-2 my-sm-0&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
-    &lt;/form&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-
-&lt;div class=&quot;container&quot;&gt;
-
-  &lt;div class=&quot;starter-template&quot;&gt;
-    &lt;h1&gt;Bootstrap starter template&lt;/h1&gt;
-    &lt;p class=&quot;lead&quot;&gt;Use this document as a way to quickly start any new project.&lt;br&gt; All you get is this text and a mostly barebones HTML document.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;&lt;!-- /.container --&gt;
-</code></pre><ul>
-<li><p>untuk melihat hasilnya ketik <strong>ng serve</strong> -&gt;img4.png
-<img src="image/chapter1/img4.png" alt=""></p>
+<p><img src="image/chapter3/img4.png" alt="">
+<img src="image/chapter3/img5.png" alt=""></p>
+<ul>
+<li><p>sehingga hasil akhirnya seperti pada gambar berikut 
+<img src="image/chapter3/img6.png" alt=""></p>
 </li>
-<li><p>tambahkan code berikut pada <strong>styles.css</strong> <strong>(olshop/src/styles.css)</strong></p>
+<li><p>buatlah services baru dengan nama <strong>category</strong></p>
 </li>
 </ul>
-<pre><code>body {padding-top: 80px};
+<pre><code>ng g s category
 </code></pre><ul>
-<li>sehingga hasilnya menjadi 
-<img src="image/chapter1/img5.png" alt=""></li>
+<li>tambakan <strong>CategoryService</strong> pada <strong>app.module.ts</strong></li>
 </ul>
+<pre><code>  providers: [
+    AuthService,
+    AuthGuard,
+    UserService,
+    AdminAuthGuard,
+    CategoryService
+  ],
+</code></pre><ul>
+<li>buka file <strong>category.service.ts</strong> tambahkan code berikut</li>
+</ul>
+<pre><code>import { Injectable } from &apos;@angular/core&apos;;
+import { AngularFireDatabase } from &apos;angularfire2/database&apos;;
+import { Observable } from &apos;rxjs&apos;;
+import { map } from &apos;rxjs/operators&apos;;
 
+@Injectable({
+  providedIn: &apos;root&apos;
+})
+export class CategoryService {
+
+  categories: Observable&lt;any[]&gt;;
+
+  constructor(private db: AngularFireDatabase) { }
+
+getCategories () {
+    return this.db.list(&apos;/Categories&apos;, ref =&gt; ref.orderByChild(&apos;name&apos;)).snapshotChanges()
+    .pipe(
+      map(actions =&gt;
+        actions.map(a =&gt; ({ key: a.key, ...a.payload.val() }))
+      )
+    );
+  }
+}
+</code></pre><ul>
+<li>buka file <strong>product-form.component.ts</strong> tambahkan code berikut</li>
+</ul>
+<pre><code>import { Component, OnInit } from &apos;@angular/core&apos;;
+import { CategoryService } from &apos;src/app/category.service&apos;;
+
+@Component({
+  selector: &apos;app-product-form&apos;,
+  templateUrl: &apos;./product-form.component.html&apos;,
+  styleUrls: [&apos;./product-form.component.css&apos;]
+})
+export class ProductFormComponent implements OnInit {
+
+  categories$;
+
+  constructor(categoryService:CategoryService) {
+    this.categories$=categoryService.getCategories();
+   }
+
+  ngOnInit() {
+  }
+
+}
+</code></pre><ul>
+<li>tambahkan code pada <strong>product-form.component.ts</strong> </li>
+</ul>
+<pre><code>
+&lt;form&gt;
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;title&quot; class=&quot;form-control&quot;&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;form-group&quot;&gt;
+  &lt;label for=&quot;price&quot;&gt;Price&lt;/label&gt;
+  &lt;div class=&quot;input-group mb-3&quot;&gt;
+      &lt;div class=&quot;input-group-prepend&quot;&gt;
+        &lt;span class=&quot;input-group-text&quot;&gt;$&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;category&quot;&gt;Category&lt;/label&gt;
+    &lt;select type=&quot;text&quot; id=&quot;category&quot; class=&quot;form-control&quot;&gt;
+      &lt;option value=&quot;&quot;&gt;&lt;/option&gt;
+      &lt;!-- tambahkan code berikut --&gt;
+      &lt;option *ngFor=&quot;let c of categories$ | async&quot; [value]=&quot;c.key&quot;&gt;
+        {{c.key}}
+      &lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;image-url&quot;&gt;Image Url&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;image-url&quot; class=&quot;form-control&quot;&gt;
+  &lt;/div&gt;
+  &lt;button class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
                                 
                                 </section>
                             
@@ -530,12 +565,12 @@
 
             
                 
-                <a href="02.html" class="navigation navigation-prev " aria-label="Previous page: 2. Membuat Project Baru dan Konfigurasi">
+                <a href="19.html" class="navigation navigation-prev " aria-label="Previous page: 19. Product-Form">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="04.html" class="navigation navigation-next " aria-label="Next page: 4. Membuat Component Baru">
+                <a href="21.html" class="navigation navigation-next " aria-label="Next page: 21. Insert Product ">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -546,7 +581,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"3. Install Bootstrap 4 dan konfigurasi","level":"1.4","depth":1,"next":{"title":"4. Membuat Component Baru","level":"1.5","depth":1,"path":"04.md","ref":"04.md","articles":[]},"previous":{"title":"2. Membuat Project Baru dan Konfigurasi","level":"1.3","depth":1,"path":"02.md","ref":"02.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"03.md","mtime":"2019-01-17T12:08:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T01:19:41.136Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"20. DropDown List ","level":"1.21","depth":1,"next":{"title":"21. Insert Product ","level":"1.22","depth":1,"path":"21.md","ref":"21.md","articles":[]},"previous":{"title":"19. Product-Form","level":"1.20","depth":1,"path":"19.md","ref":"19.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"20.md","mtime":"2019-01-21T23:29:14.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T01:19:41.136Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
