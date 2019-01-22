@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>4. Membuat Component Baru · GitBook</title>
+        <title>24. Bootstrap Card  · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="05.html" />
     
-    
-    <link rel="prev" href="03.html" />
+    <link rel="prev" href="23.html" />
     
 
     </head>
@@ -145,7 +143,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.5" data-path="04.html">
+        <li class="chapter " data-level="1.5" data-path="04.html">
             
                 <a href="04.html">
             
@@ -405,7 +403,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.25" data-path="24.html">
+        <li class="chapter active" data-level="1.25" data-path="24.html">
             
                 <a href="24.html">
             
@@ -448,7 +446,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >4. Membuat Component Baru</a>
+        <a href="." >24. Bootstrap Card </a>
     </h1>
 </div>
 
@@ -465,104 +463,155 @@
                                 
                                 <h1 id="kemampuan-akhir-yang-direncanakan">Kemampuan Akhir Yang Direncanakan</h1>
 <ul>
-<li>Peserta mampu membuat sebuah component</li>
+<li>Peserta mampu menerapkan bootstrap Card</li>
+<li><a href="https://getbootstrap.com/docs/4.0/components/card/#card-layout" target="_blank">https://getbootstrap.com/docs/4.0/components/card/#card-layout</a></li>
 </ul>
-<h1 id="percobaan-3-membuat-component-baru">Percobaan 3 Membuat Component baru</h1>
-<h3 id="membuat-component-bs-navbar">Membuat component bs-navbar</h3>
+<h1 id="percobaan-23-bootstrap-card">Percobaan 23 Bootstrap Card</h1>
 <ul>
-<li>langkah pertama memisahkan antara container dengan navbar pada app.component sehingga membutuhkan sebuah component baru</li>
-<li>untuk membuat sebuah component lakukan code berikut:<pre><code>ng g c bs-navbar
-</code></pre></li>
-<li>keterangan <ul>
-<li>g = generate</li>
-<li>c = component</li>
-<li>bs-navbar = nama folder yang akan kita generate</li>
+<li>modifikasi code pada file <strong>product-form.component</strong> menjadi <strong>2 div dengan atribut class row col-md-6</strong> pada <strong>row pertama isikan form yang sudah kita buat tadi</strong> sedangkan <strong>row kedua isiakan code card bootstrap</strong> sehingga keseluruhan code seperti berikut :</li>
 </ul>
-</li>
-<li>jika berhasil membuat component maka selanjutnya copy bagian navbar pada <strong>app.component.ts</strong>  ke <strong>bs-navbar.component.html</strong> pada <strong>(oshop/src/bs-navbar/bs-navbar.component.html)</strong> seperti code dibawah ini</li>
-</ul>
-<pre><code>&lt;nav class=&quot;navbar navbar-expand-md navbar-dark bg-dark fixed-top&quot;&gt;
-  &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
-  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarsExampleDefault&quot; aria-controls=&quot;navbarsExampleDefault&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
-    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
-  &lt;/button&gt;
-
-  &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarsExampleDefault&quot;&gt;
-    &lt;ul class=&quot;navbar-nav mr-auto&quot;&gt;
-      &lt;li class=&quot;nav-item active&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item dropdown&quot;&gt;
-        &lt;a class=&quot;nav-link dropdown-toggle&quot; href=&quot;#&quot; id=&quot;dropdown01&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;Dropdown&lt;/a&gt;
-        &lt;div class=&quot;dropdown-menu&quot; aria-labelledby=&quot;dropdown01&quot;&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;form #f=&quot;ngForm&quot; (ngSubmit)=&quot;save(f.value)&quot;&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+        &lt;input
+          #title=&quot;ngModel&quot;
+          ngModel
+          name=&quot;title&quot;
+          type=&quot;text&quot;
+          id=&quot;title&quot;
+          class=&quot;form-control&quot;
+          required
+        /&gt;
+        &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;title.touched &amp;&amp; title.invalid&quot;&gt;
+          Title is required
         &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;form class=&quot;form-inline my-2 my-lg-0&quot;&gt;
-      &lt;input class=&quot;form-control mr-sm-2&quot; type=&quot;text&quot; placeholder=&quot;Search&quot; aria-label=&quot;Search&quot;&gt;
-      &lt;button class=&quot;btn btn-secondary my-2 my-sm-0&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label for=&quot;price&quot;&gt;Price&lt;/label&gt;
+        &lt;div class=&quot;input-group mb-3&quot;&gt;
+          &lt;div class=&quot;input-group-prepend&quot;&gt;
+            &lt;span class=&quot;input-group-text&quot;&gt;$&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;input
+            #price=&quot;ngModel&quot;
+            ngModel
+            name=&quot;price&quot;
+            id=&quot;price&quot;
+            type=&quot;text&quot;
+            class=&quot;form-control&quot;
+            required
+            [min]=&quot;0&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;price.touched &amp;&amp; price.invalid&quot;&gt;
+          &lt;div *ngIf=&quot;price.errors.required&quot;&gt;price is required&lt;/div&gt;
+          &lt;div *ngIf=&quot;price.errors.min&quot;&gt;Price should be 0 or higher&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label for=&quot;category&quot;&gt;Category&lt;/label&gt;
+        &lt;select
+          #category=&quot;ngModel&quot;
+          ngModel
+          name=&quot;category&quot;
+          type=&quot;text&quot;
+          id=&quot;category&quot;
+          class=&quot;form-control&quot;
+          required
+        &gt;
+          &lt;option value=&quot;&quot;&gt;&lt;/option&gt;
+          &lt;!-- tambahkan code berikut --&gt;
+          &lt;option *ngFor=&quot;let c of (categories$ | async)&quot; [value]=&quot;c.key&quot;&gt;
+            {{ c.key }}
+          &lt;/option&gt;
+        &lt;/select&gt;
+        &lt;div
+          class=&quot;alert alert-danger&quot;
+          *ngIf=&quot;category.touched &amp;&amp; category.invalid&quot;
+        &gt;
+          category is required
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;!-- rubah image-url menjadi imageurl agar memudahkan --&gt;
+        &lt;label for=&quot;imageurl&quot;&gt;Image Url&lt;/label&gt;
+        &lt;input
+          #imageurl=&quot;ngModel&quot;
+          ngModel
+          name=&quot;imageurl&quot;
+          type=&quot;text&quot;
+          id=&quot;imageurl&quot;
+          class=&quot;form-control&quot;
+          required
+          url
+        /&gt;
+        &lt;div
+          class=&quot;alert alert-danger&quot;
+          *ngIf=&quot;imageurl.touched &amp;&amp; imageurl.invalid&quot;
+        &gt;
+          &lt;div *ngIf=&quot;imageurl.errors.required&quot;&gt;Image Url is required&lt;/div&gt;
+          &lt;div *ngIf=&quot;imageurl.errors.url&quot;&gt;Please Enter a Valid URL&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
     &lt;/form&gt;
   &lt;/div&gt;
-&lt;/nav&gt;
-</code></pre><ul>
-<li>sehingga pada <strong>app.component.html</strong> hanya berisi code berikut </li>
-</ul>
-<pre><code>&lt;div class=&quot;container&quot;&gt;
-
-  &lt;div class=&quot;starter-template&quot;&gt;
-    &lt;h1&gt;Bootstrap starter template&lt;/h1&gt;
-    &lt;p class=&quot;lead&quot;&gt;Use this document as a way to quickly start any new project.&lt;br&gt; All you get is this text and a mostly barebones HTML document.&lt;/p&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;card&quot; style=&quot;width: 18rem;&quot;&gt;
+      &lt;!-- rubah code  --&gt;
+      &lt;img class=&quot;card-img-top&quot; [src]=&quot;imageurl.value&quot; /&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5 class=&quot;card-title&quot;&gt;{{ title.value }}&lt;/h5&gt;
+        &lt;p class=&quot;card-text&quot;&gt;{{ price.value | currency: &quot;USD&quot;:true }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;&lt;!-- /.container --&gt;
+&lt;/div&gt;
 </code></pre><ul>
-<li>langkah berikutnya mengkonfigurasi pada <strong>bs-navbar.component.ts</strong></li>
-<li>rubah <strong>selector</strong> pada <strong>bs-navbar.component.ts</strong> pada <strong>(oshop/src/bs-navbar/bs-navbar.component.ts)</strong> menjadi  <strong>bs-navbar</strong> sehingga keseluruhan code pada <strong>bs-navbar.component.ts</strong> </li>
+<li>jika berhasil maka tampilannya akan seperti gambar berikut </li>
+</ul>
+<p><img src="image/chapter3/img12.png" alt=""></p>
+<ul>
+<li>buka file <strong>products-form.component.ts</strong> modifikasi code menjadi seperti berikut</li>
 </ul>
 <pre><code>import { Component, OnInit } from &apos;@angular/core&apos;;
+import { CategoryService } from &apos;src/app/category.service&apos;;
+import { ProductService } from &apos;src/app/product.service&apos;;
+import { Router } from &apos;@angular/router&apos;;
 
 @Component({
-  selector: &apos;bs-navbar&apos;,
-  templateUrl: &apos;./bs-navbar.component.html&apos;,
-  styleUrls: [&apos;./bs-navbar.component.css&apos;]
+  selector: &apos;app-product-form&apos;,
+  templateUrl: &apos;./product-form.component.html&apos;,
+  styleUrls: [&apos;./product-form.component.css&apos;]
 })
-export class BsNavbarComponent implements OnInit {
+export class ProductFormComponent implements OnInit {
 
-  constructor() { }
+  categories$;
+
+  constructor(
+    private router:Router,
+    private categoryService:CategoryService,
+    private productService:ProductService) {
+    this.categories$=categoryService.getCategories();
+   }
+
+   save(product){
+    //  console.log(product);
+    this.productService.create(product);
+    this.router.navigate([&apos;/admin/admin-products&apos;]);
+
+   }
 
   ngOnInit() {
   }
 
 }
-</code></pre><ul>
-<li>langkah berikutnya setelah kita rubah selector <strong>selector</strong> pada <strong>bs-navbar.component.ts</strong> maka selanjutnya tambahkan code berikut pada <strong>app.component.ts</strong></li>
-</ul>
-<pre><code>&lt;bs-navbar&gt;&lt;/bs-navbar&gt;
-</code></pre><ul>
-<li>sehingga code secara keseluruhan pada  <strong>app.component.ts</strong></li>
-</ul>
-<pre><code>&lt;bs-navbar&gt;&lt;/bs-navbar&gt;
-
-&lt;div class=&quot;container&quot;&gt;
-
-  &lt;div class=&quot;starter-template&quot;&gt;
-    &lt;h1&gt;Bootstrap starter template&lt;/h1&gt;
-    &lt;p class=&quot;lead&quot;&gt;Use this document as a way to quickly start any new project.&lt;br&gt; All you get is this text and a mostly barebones HTML document.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;&lt;!-- /.container --&gt;
-</code></pre><ul>
-<li>jika berhasil maka tampilannya seperti pada gambar
-<img src="image/chapter1/img5.png" alt=""></li>
-</ul>
-
+</code></pre>
                                 
                                 </section>
                             
@@ -589,14 +638,10 @@ export class BsNavbarComponent implements OnInit {
 
             
                 
-                <a href="03.html" class="navigation navigation-prev " aria-label="Previous page: 3. Install Bootstrap 4 dan konfigurasi">
+                <a href="23.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 23. custom-validasi ">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="05.html" class="navigation navigation-next " aria-label="Next page: 5. Routes">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -605,7 +650,7 @@ export class BsNavbarComponent implements OnInit {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"4. Membuat Component Baru","level":"1.5","depth":1,"next":{"title":"5. Routes","level":"1.6","depth":1,"path":"05.md","ref":"05.md","articles":[]},"previous":{"title":"3. Install Bootstrap 4 dan konfigurasi","level":"1.4","depth":1,"path":"03.md","ref":"03.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"04.md","mtime":"2019-01-17T12:31:46.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T10:53:10.336Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"24. Bootstrap Card ","level":"1.25","depth":1,"previous":{"title":"23. custom-validasi ","level":"1.24","depth":1,"path":"23.md","ref":"23.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"24.md","mtime":"2019-01-22T10:53:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T10:53:10.336Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

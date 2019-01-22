@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { RouterModule} from '@angular/router';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CustomFormsModule} from 'ng2-validation';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -46,6 +47,7 @@ import { ProductService } from './product.service';
   imports: [
     BrowserModule,
     CustomFormsModule,
+    HttpClientModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,

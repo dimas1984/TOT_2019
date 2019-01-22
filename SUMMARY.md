@@ -24,4 +24,5 @@
 * [21. Insert Product ](21.md)
 * [22. validasi ](22.md)
 * [23. custom-validasi ](23.md)
+* [24. Bootstrap Card ](24.md)
 
