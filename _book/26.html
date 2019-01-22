@@ -493,13 +493,186 @@
 </ul>
 <h1 id="percobaan-edit">Percobaan Edit</h1>
 <ul>
-<li><p>jika kita klik edit maka akan muncul error pada console
-<img src="image/chapter3/img14.png" alt=""></p>
-</li>
-<li><p>jika berhasil maka hasilnya akan seperti pada gambar berikut</p>
-</li>
+<li>jika kita klik edit maka akan muncul error pada console</li>
 </ul>
-<p><img src="image/chapter3/img13.png" alt=""></p>
+<p><img src="image/chapter3/img14.png" alt=""></p>
+<ul>
+<li>hal ini dikarenakan tidak dapat menemukan routenya maka untuk itu lakukan hal berikut <strong>buka file app.module.ts</strong> dan ketik code berikut <strong>tambahkan path baru path:&apos;admin/admin-products/:id&apos;,</strong></li>
+</ul>
+<pre><code> {path:&apos;admin/admin-products/:id&apos;,
+              component:ProductFormComponent,
+              canActivate:[AuthGuard,AdminAuthGuard]},
+</code></pre><ul>
+<li>tambahkan juga path products</li>
+</ul>
+<pre><code>{path:&apos;admin/admin-products/&apos;,
+              component:ProductFormComponent,
+              canActivate:[AuthGuard,AdminAuthGuard]},
+</code></pre><ul>
+<li>jika berhasil maka pada saat kita pilih edit akan muncul seperti pada gambar dibawah ini</li>
+</ul>
+<p><img src="image/chapter3/img15.png" alt=""></p>
+<ul>
+<li>jika kita lihat pada inputan isinya masih belum tampil untuk itu lakukan hal berikut ini</li>
+<li>buka file <strong>products.services.ts</strong> tambahkan method <strong>get(productID)</strong></li>
+</ul>
+<pre><code>  get(productId){
+    return this.db.object(&apos;/products/&apos;+productId);
+  }
+</code></pre><ul>
+<li>buka file <strong>product-form.component.ts</strong> modifikasi code berikut menjadi seperti berikut:</li>
+</ul>
+<pre><code>import { Component, OnInit } from &apos;@angular/core&apos;;
+import { CategoryService } from &apos;src/app/category.service&apos;;
+import { ProductService } from &apos;src/app/product.service&apos;;
+import { Router, ActivatedRoute } from &apos;@angular/router&apos;;
+
+@Component({
+  selector: &apos;app-product-form&apos;,
+  templateUrl: &apos;./product-form.component.html&apos;,
+  styleUrls: [&apos;./product-form.component.css&apos;]
+})
+export class ProductFormComponent implements OnInit {
+
+  categories$;
+  product={};
+
+  constructor(
+    private router:Router,
+    private route: ActivatedRoute,
+    private categoryService:CategoryService,
+    private productService:ProductService) {
+    this.categories$=categoryService.getCategories();
+
+    // let id = this.route.snapshot.paramMap.get(&apos;id&apos;);
+    // if (id) this.router.navigate([&apos;/admin/admin-products&apos;]);
+    //  if (id) this.productService.get(id).take(1).subscribe(p=&gt;this.product=p)
+    let id = this.route.snapshot.paramMap.get(&apos;id&apos;);
+    if (id) {
+      this.productService.get(id).valueChanges().subscribe(p =&gt; this.product = p);
+    }
+   }
+
+   save(product){
+    //  console.log(product);
+    this.productService.create(product);
+    this.router.navigate([&apos;/admin/admin-products&apos;]);
+
+   }
+
+  ngOnInit() {
+  }
+
+}
+</code></pre><ul>
+<li>buka file <strong>product-form.component.html</strong> tambahkan <strong>[(ngModel)]</strong></li>
+</ul>
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;form #f=&quot;ngForm&quot; (ngSubmit)=&quot;save(f.value)&quot;&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;
+        &lt;input
+          #title=&quot;ngModel&quot;
+          [(ngModel)] = &quot;product.title&quot;
+          name=&quot;title&quot;
+          type=&quot;text&quot;
+          id=&quot;title&quot;
+          class=&quot;form-control&quot;
+          required
+        /&gt;
+        &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;title.touched &amp;&amp; title.invalid&quot;&gt;
+          Title is required
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label for=&quot;price&quot;&gt;Price&lt;/label&gt;
+        &lt;div class=&quot;input-group mb-3&quot;&gt;
+          &lt;div class=&quot;input-group-prepend&quot;&gt;
+            &lt;span class=&quot;input-group-text&quot;&gt;$&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;input
+            #price=&quot;ngModel&quot;
+            [(ngModel)] = &quot;product.price&quot;
+            name=&quot;price&quot;
+            id=&quot;price&quot;
+            type=&quot;text&quot;
+            class=&quot;form-control&quot;
+            required
+            [min]=&quot;0&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;alert alert-danger&quot; *ngIf=&quot;price.touched &amp;&amp; price.invalid&quot;&gt;
+          &lt;div *ngIf=&quot;price.errors.required&quot;&gt;price is required&lt;/div&gt;
+          &lt;div *ngIf=&quot;price.errors.min&quot;&gt;Price should be 0 or higher&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label for=&quot;category&quot;&gt;Category&lt;/label&gt;
+        &lt;select
+          #category=&quot;ngModel&quot;
+          [(ngModel)] = &quot;product.category&quot;
+          name=&quot;category&quot;
+          type=&quot;text&quot;
+          id=&quot;category&quot;
+          class=&quot;form-control&quot;
+          required
+        &gt;
+          &lt;option value=&quot;&quot;&gt;&lt;/option&gt;
+          &lt;!-- tambahkan code berikut --&gt;
+          &lt;option *ngFor=&quot;let c of (categories$ | async)&quot; [value]=&quot;c.key&quot;&gt;
+            {{ c.key }}
+          &lt;/option&gt;
+        &lt;/select&gt;
+        &lt;div
+          class=&quot;alert alert-danger&quot;
+          *ngIf=&quot;category.touched &amp;&amp; category.invalid&quot;
+        &gt;
+          category is required
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;!-- rubah image-url menjadi imageurl agar memudahkan --&gt;
+        &lt;label for=&quot;imageurl&quot;&gt;Image Url&lt;/label&gt;
+        &lt;input
+          #imageurl=&quot;ngModel&quot;
+          [(ngModel)] = &quot;product.imageurl&quot;
+          name=&quot;imageurl&quot;
+          type=&quot;text&quot;
+          id=&quot;imageurl&quot;
+          class=&quot;form-control&quot;
+          required
+          url
+        /&gt;
+        &lt;div
+          class=&quot;alert alert-danger&quot;
+          *ngIf=&quot;imageurl.touched &amp;&amp; imageurl.invalid&quot;
+        &gt;
+          &lt;div *ngIf=&quot;imageurl.errors.required&quot;&gt;Image Url is required&lt;/div&gt;
+          &lt;div *ngIf=&quot;imageurl.errors.url&quot;&gt;Please Enter a Valid URL&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;card&quot; style=&quot;width: 18rem;&quot;&gt;
+      &lt;!-- rubah code  --&gt;
+      &lt;img class=&quot;card-img-top&quot; [src]=&quot;product.imageurl&quot; *ngIf=&quot;product.imageurl&quot;&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5 class=&quot;card-title&quot;&gt;{{ product.value }}&lt;/h5&gt;
+        &lt;p class=&quot;card-text&quot;&gt;{{ product.value | currency: &quot;USD&quot;:true }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><ul>
+<li>jika berhasil maka tampilan akan seperti berikut</li>
+</ul>
+<p><img src="image/chapter3/img16.png" alt=""></p>
 
                                 
                                 </section>
@@ -539,7 +712,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"26. Edit Product","level":"1.27","depth":1,"previous":{"title":"25. Display List Product ","level":"1.26","depth":1,"path":"25.md","ref":"25.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"26.md","mtime":"2019-01-22T12:31:58.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T12:32:04.336Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"26. Edit Product","level":"1.27","depth":1,"previous":{"title":"25. Display List Product ","level":"1.26","depth":1,"path":"25.md","ref":"25.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["noembed","livereload"],"pluginsConfig":{"noembed":{},"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"26.md","mtime":"2019-01-22T15:03:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-22T15:03:07.023Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
