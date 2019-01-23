@@ -28,4 +28,6 @@
 * [25. Display List Product ](25.md)
 * [26. Edit Product](26.md)
 * [27. Update Product](27.md)
+* [28. Delete Product](28.md)
+* [29. Searching Product](29.md)
 
