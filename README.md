@@ -1,6 +1,6 @@
 # TOT-2019 POLINEMA dan PENS
 
-![](image/chapter1/readme.png)
+![](book/image/chapter1/readme.png)
 
 # TEAM PENYUSUN
 - Dimas Wahyu Wibowo
