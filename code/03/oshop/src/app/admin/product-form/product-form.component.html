@@ -94,8 +94,8 @@
       <!-- rubah code  -->
       <img class="card-img-top" [src]="product.imageurl" *ngIf="product.imageurl">
       <div class="card-body">
-        <h5 class="card-title">{{ product.value }}</h5>
-        <p class="card-text">{{ product.value | currency: "USD":true }}</p>
+        <h5 class="card-title">{{ product.title }}</h5>
+        <p class="card-text">{{ product.price | currency: "USD":true }}</p>
       </div>
     </div>
   </div>
