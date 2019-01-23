@@ -1,8 +1,7 @@
 import { Observable} from 'rxjs';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router/src/utils/preactivation';
-import { Router, RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
+import { Router, RouterStateSnapshot,ActivatedRouteSnapshot,CanActivate} from '@angular/router';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -12,27 +11,21 @@ import { map } from 'rxjs/operators';
 // @Injectable()
 export class AuthGuard implements CanActivate{
 
-  path:ActivatedRouteSnapshot[];
-  route:ActivatedRouteSnapshot;
   
   constructor(private auth:AuthService,private router:Router) { }
 
-    canActive(
-      next: ActivatedRouteSnapshot, 
-      state: RouterStateSnapshot
-      ):Observable<boolean>
+  // tambahkan parameter route,state:RouterStateSnapshot
+    canActivate(route,state:RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
     {
       return this.auth.user$.pipe(
         map(user =>{
           if (user){
             return true;
           } 
-          this.router.navigate(["/"]);
+          // tambahkan Sets query parameters to the URL.
+          this.router.navigate(["/login"],{queryParams:{returnUrl:state.url}});
           return false;
         })
       );
-      
     }
-
 }
- 
